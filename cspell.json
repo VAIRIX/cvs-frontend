@@ -1,0 +1,21 @@
+{
+  "version": "0.2",
+  "words": ["Datagrid"],
+  "language": "en",
+  "ignorePaths": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/.git/**",
+    "**/.gitignore",
+    "**/.github",
+    "./coverage/**",
+    "./package.json",
+    "./package-lock.json",
+    "./tsconfig.json",
+    "./eslint.js",
+    "./commitlint.config.js",
+    "./cspell.json",
+    "./public/**",
+    "./src/assets/**"
+  ]
+}

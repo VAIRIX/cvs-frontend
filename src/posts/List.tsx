@@ -1,10 +1,10 @@
-import { Datagrid, List, ReferenceField, TextField } from "react-admin";
-import { useGetList } from "react-admin";
+import { Datagrid, List, ReferenceField, TextField } from 'react-admin';
+import { useGetList } from 'react-admin';
 
 export const PostList = () => {
-  const { data, total, isLoading, error } = useGetList("users", {
+  const { data, total, isLoading, error } = useGetList('users', {
     pagination: { page: 1, perPage: 10 },
-    sort: { field: "published_at", order: "DESC" },
+    sort: { field: 'published_at', order: 'DESC' },
   });
 
   console.log(isLoading);
