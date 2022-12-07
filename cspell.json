@@ -1,6 +1,6 @@
 {
   "version": "0.2",
-  "words": ["Datagrid"],
+  "words": ["Datagrid", "VITE"],
   "language": "en",
   "ignorePaths": [
     "**/node_modules/**",
