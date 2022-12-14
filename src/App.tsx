@@ -1,10 +1,14 @@
 import { Admin, Resource } from 'react-admin';
-import { UserList, UserCreate } from './users';
+import { ProfessionalList, ProfessionalCreate } from './professionals';
 import { dataProvider } from './api/dataProvider';
 
 const App = () => (
   <Admin dataProvider={dataProvider}>
-    <Resource name="users" list={UserList} create={UserCreate} />
+    <Resource
+      name="professionals"
+      list={ProfessionalList}
+      create={ProfessionalCreate}
+    />
   </Admin>
 );
 export default App;
