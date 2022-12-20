@@ -1,6 +1,6 @@
 import { Datagrid, EmailField, List, TextField } from 'react-admin';
 
-export const UserList = () => (
+export const ProfessionalList = () => (
   <List exporter={false}>
     <Datagrid rowClick="edit">
       <TextField source="id" />

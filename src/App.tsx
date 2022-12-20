@@ -1,5 +1,5 @@
 import { Admin, Resource } from 'react-admin';
-import { UserList, UserCreate } from './users';
+import { ProfessionalList, ProfessionalCreate } from './professionals';
 import { dataProvider } from './api/dataProvider';
 import authProvider from './api/authProvider';
 import LoginPage from './pages/Login';
@@ -10,7 +10,11 @@ const App = () => (
     dataProvider={dataProvider}
     authProvider={authProvider}
   >
-    <Resource name="users" list={UserList} create={UserCreate} />
+    <Resource
+      name="professionals"
+      list={ProfessionalList}
+      create={ProfessionalCreate}
+    />
   </Admin>
 );
 export default App;
