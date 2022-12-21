@@ -1,11 +1,7 @@
 import Storage from '.';
+import { ACCESS_TOKEN } from '../constants';
 
-enum Locals {
-  ACCESS_TOKEN = 'access_token',
-  REFRESH_TOKEN = 'refresh_token',
-}
-
-export default class Tokens extends Storage<Locals> {
+export default class Tokens extends Storage<string> {
   private static instance?: Tokens;
 
   private constructor() {
@@ -21,22 +17,13 @@ export default class Tokens extends Storage<Locals> {
   }
 
   public getAccessToken() {
-    return this.get(Locals.ACCESS_TOKEN);
+    return this.get(ACCESS_TOKEN);
   }
 
   public setAccessToken(accessToken: string) {
-    this.set(Locals.ACCESS_TOKEN, accessToken);
+    this.set(ACCESS_TOKEN, accessToken);
   }
-
-  public getRefreshToken() {
-    return this.get(Locals.REFRESH_TOKEN);
-  }
-
-  public setRefreshToken(refreshToken: string) {
-    this.set(Locals.REFRESH_TOKEN, refreshToken);
-  }
-
   public clear() {
-    this.clearItems([Locals.ACCESS_TOKEN, Locals.REFRESH_TOKEN]);
+    this.clearItems([ACCESS_TOKEN]);
   }
 }
