@@ -3,23 +3,25 @@ import { useState } from 'react';
 import { useLogin, useNotify, Button, TextInput, Form } from 'react-admin';
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const login = useLogin();
   const notify = useNotify();
   const submit = (e: any) => {
     e.preventDefault();
-    login({ email, password }).catch(() => notify('Invalid email or password'));
+    login({ username, password }).catch(() =>
+      notify('Invalid username or password'),
+    );
   };
 
   return (
     <>
       <Form onSubmit={submit}>
         <TextInput
-          name="email"
-          source="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          name="username"
+          source="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           fullWidth
         />
         <TextInput
