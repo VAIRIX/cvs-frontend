@@ -1,8 +1,14 @@
 import { Admin, Resource } from 'react-admin';
-import { ProfessionalList, ProfessionalCreate } from './professionals';
+import {
+  ProfessionalList,
+  ProfessionalCreate,
+  ProfessionalShow,
+  ProfessionalEdit,
+} from './professionals';
 import { dataProvider } from './api/dataProvider';
 import authProvider from './api/authProvider';
 import LoginPage from './pages/Login';
+import { ProjectEdit, ProjectList, ProjectShow } from './projects';
 
 const App = () => (
   <Admin
@@ -14,6 +20,14 @@ const App = () => (
       name="professionals"
       list={ProfessionalList}
       create={ProfessionalCreate}
+      show={ProfessionalShow}
+      edit={ProfessionalEdit}
+    />
+    <Resource
+      name="projects"
+      list={ProjectList}
+      show={ProjectShow}
+      edit={ProjectEdit}
     />
   </Admin>
 );
