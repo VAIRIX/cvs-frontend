@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { AuthProvider } from 'react-admin';
-import { API_URL } from '../constants';
-import Tokens from '../storage/instance';
+import Tokens from '../storage/tokenStorage';
+import { http } from './httpClient';
 
 const tokens = Tokens.getInstance();
 export interface LoginProps {
@@ -9,18 +9,15 @@ export interface LoginProps {
   password: string;
 }
 
-export const instance = axios.create({
-  baseURL: API_URL,
-});
-
 const authProvider: AuthProvider = {
   login: async ({ username, password }: LoginProps) => {
     try {
-      const { data: response } = await instance.post('/auth/sign-in', {
+      const response = await http.post('/auth/sign-in', {
         username,
         password,
       });
-      tokens.setAccessToken(response.accessToken);
+
+      tokens.setAccessToken((response.data as any).accessToken);
       return Promise.resolve();
     } catch (error) {
       return Promise.reject();

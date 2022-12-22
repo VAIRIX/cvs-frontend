@@ -7,7 +7,7 @@ interface IStorage {
 export default abstract class Storage<T extends string> {
   private readonly storage: IStorage;
 
-  public constructor(getStorage = (): IStorage => window.localStorage) {
+  constructor(getStorage = (): IStorage => window.localStorage) {
     this.storage = getStorage();
   }
 
