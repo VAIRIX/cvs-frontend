@@ -3,7 +3,7 @@ describe('home', () => {
     cy.visit('http://localhost:5173/');
   });
 
-  it('passes a example test', () => {
-    cy.url().should('eq', 'http://localhost:5173/#/professionals');
+  it('redirects to login', () => {
+    cy.url().should('eq', 'http://localhost:5173/#/login');
   });
 });
