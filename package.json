@@ -11,6 +11,7 @@
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
     "prepare": "husky install",
     "precommit": "npm run cspell && npx lint-staged && pretty-quick --staged",
+    "preinstall": "node use_npm.js",
     "cspell": "cspell '**'"
   },
   "dependencies": {
