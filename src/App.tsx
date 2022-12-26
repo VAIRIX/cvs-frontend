@@ -8,7 +8,6 @@ import {
 import { dataProvider } from './api/dataProvider';
 import authProvider from './api/authProvider';
 import LoginPage from './pages/Login';
-import { ProjectEdit, ProjectList, ProjectShow } from './projects';
 
 const App = () => (
   <Admin
@@ -22,12 +21,6 @@ const App = () => (
       create={ProfessionalCreate}
       show={ProfessionalShow}
       edit={ProfessionalEdit}
-    />
-    <Resource
-      name="projects"
-      list={ProjectList}
-      show={ProjectShow}
-      edit={ProjectEdit}
     />
   </Admin>
 );
