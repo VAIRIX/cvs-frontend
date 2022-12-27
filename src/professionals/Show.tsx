@@ -29,7 +29,7 @@ export const ProfessionalShow = () => {
     return (
       <TopToolbar>
         <EditButton />
-        <Button label="Generate CV" onClick={customAction} />
+        <Button label="Generate CV" onClick={generateCv} />
       </TopToolbar>
     );
   };
