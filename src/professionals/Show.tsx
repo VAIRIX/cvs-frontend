@@ -17,7 +17,7 @@ export const ProfessionalShow = () => {
   const { id } = useParams(); // this component is rendered in the /books/:id path
   const notify = useNotify();
 
-  const customAction = async () => {
+  const generateCv = async () => {
     try {
       const res = await http.post('/resumes', { professionalId: id });
       notify(res.data.resumeUrl);
