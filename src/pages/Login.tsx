@@ -1,20 +1,18 @@
 import React, { useCallback } from 'react';
 import { useState } from 'react';
-import { useLogin, useNotify, Button, TextInput, Form } from 'react-admin';
-import { INVALID_USER } from '../constants/errorMessages';
+import { useLogin, Button, TextInput, Form, Login } from 'react-admin';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const login = useLogin();
-  const notify = useNotify();
 
   const submit = useCallback(() => {
-    login({ username, password }).catch(() => notify(INVALID_USER));
-  }, [login, notify, username, password]);
+    login({ username, password });
+  }, [login, username, password]);
 
   return (
-    <>
+    <Login>
       <Form onSubmit={submit}>
         <TextInput
           name="username"
@@ -32,7 +30,7 @@ const LoginPage = () => {
         />
       </Form>
       <Button onClick={submit} label={'Login'} />
-    </>
+    </Login>
   );
 };
 
