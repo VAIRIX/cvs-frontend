@@ -21,7 +21,7 @@ enum StatusCode {
 const injectToken = (config: AxiosRequestConfig): AxiosRequestConfig => {
   try {
     const tokens = Tokens.getInstance();
-    const token = tokens.getIdToken();
+    const token = tokens.getAccessToken();
 
     if (token != null && config && config.headers) {
       Object.assign(config.headers, { Authorization: `Bearer ${token}` });
