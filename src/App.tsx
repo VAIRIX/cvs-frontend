@@ -10,6 +10,7 @@ import {
 import { dataProvider } from './api/dataProvider';
 import authProvider from './api/authProvider';
 import LoginPage from './pages/Login';
+import { ProjectShow } from './projects/Show';
 
 const App = () => (
   <Admin
@@ -29,6 +30,7 @@ const App = () => (
       list={ProjectsList}
       create={ProjectsCreate}
       edit={ProjectsEdit}
+      show={ProjectShow}
     />
   </Admin>
 );

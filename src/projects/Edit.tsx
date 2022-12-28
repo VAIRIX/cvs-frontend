@@ -1,12 +1,6 @@
 import React from 'react';
 
-import {
-  SimpleForm,
-  EditProps,
-  Create,
-  DateInput,
-  TextInput,
-} from 'react-admin';
+import { SimpleForm, EditProps, Edit, DateInput, TextInput } from 'react-admin';
 
 export const ProjectsEdit: React.FC<EditProps> = () => {
   return (
@@ -21,6 +15,6 @@ export const ProjectsEdit: React.FC<EditProps> = () => {
           required
         />
       </SimpleForm>
-    </Create>
+    </Edit>
   );
 };
