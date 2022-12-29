@@ -1,20 +1,23 @@
-import { Admin, Resource } from 'react-admin';
-import { ProjectsList, ProjectsCreate, ProjectsEdit } from './projects';
+import { Admin, Login, Resource } from 'react-admin';
+import {
+  ProjectsList,
+  ProjectsCreate,
+  ProjectsEdit,
+  ProjectShow,
+} from './resources/projects';
 import {
   ProfessionalList,
   ProfessionalCreate,
   ProfessionalShow,
   ProfessionalEdit,
-} from './professionals';
+} from './resources/professionals';
 
 import { dataProvider } from './api/dataProvider';
 import authProvider from './api/authProvider';
-import LoginPage from './pages/Login';
-import { ProjectShow } from './projects/Show';
 
 const App = () => (
   <Admin
-    loginPage={LoginPage}
+    loginPage={<Login />}
     dataProvider={dataProvider}
     authProvider={authProvider}
   >
