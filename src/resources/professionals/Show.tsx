@@ -8,28 +8,35 @@ import {
   SimpleShowLayout,
   TextField,
   TopToolbar,
+  UrlField,
   useNotify,
 } from 'react-admin';
-import { http } from '../api/httpClient';
 import { useParams } from 'react-router-dom';
+import API from '../../api/api';
+import { ERROR_MESSAGES } from '../../constants/errorMessages';
 
 export const ProfessionalShow = () => {
-  const { id } = useParams(); // this component is rendered in the /books/:id path
+  const { id } = useParams();
   const notify = useNotify();
 
-  const generateCv = async () => {
+  const generateResume = async () => {
+    if (!id) return;
     try {
-      const res = await http.post('/resumes', { professionalId: id });
-      notify(res.data.resumeUrl);
+      const { resumeUrl } = await API.generateResume(id);
+      notify(resumeUrl);
     } catch (error) {
-      notify(error.message);
+      if (error instanceof Error) {
+        notify(error.message);
+      } else {
+        notify(ERROR_MESSAGES.GENERIC_ERROR);
+      }
     }
   };
   const PostShowActions = () => {
     return (
       <TopToolbar>
         <EditButton />
-        <Button label="Generate CV" onClick={generateCv} />
+        <Button label="Generate Resume" onClick={generateResume} />
       </TopToolbar>
     );
   };
@@ -45,6 +52,7 @@ export const ProfessionalShow = () => {
         <NumberField source="english" />
         <TextField source="about" />
         <EmailField source="email" />
+        <UrlField target={'_blank'} source="resumeUrl" />
       </SimpleShowLayout>
     </Show>
   );
