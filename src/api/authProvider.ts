@@ -1,12 +1,10 @@
 import { AuthProvider } from 'react-admin';
-import { AUTH_ERROR, INVALID_USER } from '../constants/errorMessages';
+import { ERROR_MESSAGES } from '../constants/errorMessages';
 import { FORBIDDEN, UNAUTHORIZED } from '../constants/statusCodes';
-import Tokens from '../storage/tokenStorage';
+import tokens from '../storage/tokenStorage';
 import { http } from './httpClient';
 
 const UNAUTHORIZED_STATUS_CODES = [FORBIDDEN, UNAUTHORIZED];
-
-const tokens = Tokens.getInstance();
 
 interface LoginResponse {
   data: {
@@ -30,19 +28,21 @@ const authProvider: AuthProvider = {
       tokens.setAccessToken(response.data.accessToken);
       return Promise.resolve();
     } catch (error) {
-      return Promise.reject(INVALID_USER);
+      return Promise.reject(ERROR_MESSAGES.INVALID_USER);
     }
   },
   checkError: (error) => {
     const status = error.status;
-    if (UNAUTHORIZED_STATUS_CODES.some(status)) {
+    if (UNAUTHORIZED_STATUS_CODES.some((code) => code === status)) {
       tokens.clear();
-      return Promise.reject(AUTH_ERROR);
+      return Promise.reject(ERROR_MESSAGES.AUTH_ERROR);
     }
     return Promise.resolve();
   },
   checkAuth: () =>
-    tokens.getAccessToken() ? Promise.resolve() : Promise.reject(AUTH_ERROR),
+    tokens.getAccessToken()
+      ? Promise.resolve()
+      : Promise.reject(ERROR_MESSAGES.AUTH_ERROR),
   logout: () => {
     tokens.clear();
     return Promise.resolve();
