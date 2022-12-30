@@ -32,7 +32,7 @@ export const ProfessionalShow = () => {
       });
   }, []);
 
-  const customAction = async () => {
+  const generateCv = async () => {
     try {
       const res: any = await http.post('/resumes', { professionalId: id });
       notify(res.data.resumeUrl);
@@ -44,7 +44,7 @@ export const ProfessionalShow = () => {
     return (
       <TopToolbar>
         <EditButton />
-        <Button label="Generate CV" onClick={customAction} />
+        <Button label="Generate CV" onClick={generateCv} />
       </TopToolbar>
     );
   };
