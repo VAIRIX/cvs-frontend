@@ -9,29 +9,14 @@ import {
   TextField,
   TopToolbar,
   UrlField,
-  useNotify,
 } from 'react-admin';
 import { useParams } from 'react-router-dom';
-import API from '../../api/api';
-import { ERROR_MESSAGES } from '../../constants/errorMessages';
+import { useGenerateResume } from '../../hooks';
 
 export const ProfessionalShow = () => {
   const { id } = useParams();
-  const notify = useNotify();
+  const { generateResume, loading } = useGenerateResume(id);
 
-  const generateResume = async () => {
-    if (!id) return;
-    try {
-      const { resumeUrl } = await API.generateResume(id);
-      notify(resumeUrl);
-    } catch (error) {
-      if (error instanceof Error) {
-        notify(error.message);
-      } else {
-        notify(ERROR_MESSAGES.GENERIC_ERROR);
-      }
-    }
-  };
   const PostShowActions = () => {
     return (
       <TopToolbar>
@@ -53,6 +38,7 @@ export const ProfessionalShow = () => {
         <TextField source="about" />
         <EmailField source="email" />
         <UrlField target={'_blank'} source="resumeUrl" />
+        {loading && <p>Generating resume...</p>}
       </SimpleShowLayout>
     </Show>
   );
