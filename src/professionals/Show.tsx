@@ -34,9 +34,9 @@ export const ProfessionalShow = () => {
 
   const generateCv = async () => {
     try {
-      const res: any = await http.post('/resumes', { professionalId: id });
+      const res = await http.post('/resumes', { professionalId: id });
       notify(res.data.resumeUrl);
-    } catch (error: any) {
+    } catch (error) {
       notify(error.message);
     }
   };
@@ -60,6 +60,7 @@ export const ProfessionalShow = () => {
         <NumberField source="english" />
         <TextField source="about" />
         <EmailField source="email" />
+
         <h2>Projects</h2>
         {professionalData?.projects.map(
           (project: ProfessionalProjectsProps) => {
