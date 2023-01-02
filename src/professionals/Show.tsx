@@ -9,28 +9,16 @@ import {
   TextField,
   TopToolbar,
   useNotify,
+  WithRecord,
 } from 'react-admin';
 import { http } from '../api/httpClient';
 import { useParams } from 'react-router-dom';
-import { dataProvider } from '../api/dataProvider';
-import { useEffect, useState } from 'react';
-import { ProfessionalProjectsProps, ProfessionalProps } from './types';
+import { ProfessionalProjectsProps } from './types';
+import { Box, Typography, Stack, Grid } from '@mui/material';
 
 export const ProfessionalShow = () => {
   const { id } = useParams(); // this component is rendered in the /books/:id path
   const notify = useNotify();
-  const [professionalData, setProfessionalData] = useState<ProfessionalProps>();
-
-  useEffect(() => {
-    dataProvider
-      .getOne('professionals', { id: id })
-      .then(({ data }) => {
-        setProfessionalData(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
 
   const generateCv = async () => {
     try {
@@ -61,20 +49,44 @@ export const ProfessionalShow = () => {
         <TextField source="about" />
         <EmailField source="email" />
 
-        <h2>Projects</h2>
-        {professionalData?.projects.map(
-          (project: ProfessionalProjectsProps) => {
-            return (
-              <div>
-                <h3>{project.project.name}</h3>
-                <p>Description: {project.project.description}</p>
-                <p>Role: {project.responsibility}</p>
-                <p>From: {project.project.from.split('T')[0]}</p>
-                <p>To: {project.project.to.split('T')[0]}</p>
-              </div>
-            );
-          },
-        )}
+        <WithRecord
+          label="Projects"
+          render={(record) =>
+            record.projects.map((project: ProfessionalProjectsProps) => {
+              return (
+                <Grid
+                  justifyContent="left"
+                  direction="column"
+                  gap={2}
+                  container
+                  mb={2}
+                >
+                  <Typography variant="h6" fontWeight="bold">
+                    {project.project.name}
+                  </Typography>
+                  <Grid xs={4} item>
+                    <Typography fontWeight="bold">Description:</Typography>
+                    <Typography>{project.project.description}</Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography fontWeight="bold">Role: </Typography>
+                    <Typography>{project.responsibility}</Typography>
+                  </Grid>
+                  <Grid xs={4} item>
+                    <Typography fontWeight="bold">From: </Typography>
+                    <Typography>
+                      {project.project.from.split('T')[0]}
+                    </Typography>
+                  </Grid>
+                  <Grid xs={4} item>
+                    <Typography fontWeight="bold">To:</Typography>
+                    <Typography> {project.project.to.split('T')[0]}</Typography>
+                  </Grid>
+                </Grid>
+              );
+            })
+          }
+        />
       </SimpleShowLayout>
     </Show>
   );
