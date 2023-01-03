@@ -14,7 +14,7 @@ import {
 import { http } from '../api/httpClient';
 import { useParams } from 'react-router-dom';
 import { ProfessionalProjectsProps } from './types';
-import { Box, Typography, Stack, Grid } from '@mui/material';
+import { ProfessionalProject } from './ProfessionalProject';
 
 export const ProfessionalShow = () => {
   const { id } = useParams(); // this component is rendered in the /books/:id path
@@ -52,39 +52,12 @@ export const ProfessionalShow = () => {
         <WithRecord
           label="Projects"
           render={(record) =>
-            record.projects.map((project: ProfessionalProjectsProps) => {
-              return (
-                <Grid
-                  justifyContent="left"
-                  direction="column"
-                  gap={2}
-                  container
-                  mb={2}
-                >
-                  <Typography variant="h6" fontWeight="bold">
-                    {project.project.name}
-                  </Typography>
-                  <Grid xs={4} item>
-                    <Typography fontWeight="bold">Description:</Typography>
-                    <Typography>{project.project.description}</Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography fontWeight="bold">Role: </Typography>
-                    <Typography>{project.responsibility}</Typography>
-                  </Grid>
-                  <Grid xs={4} item>
-                    <Typography fontWeight="bold">From: </Typography>
-                    <Typography>
-                      {project.project.from.split('T')[0]}
-                    </Typography>
-                  </Grid>
-                  <Grid xs={4} item>
-                    <Typography fontWeight="bold">To:</Typography>
-                    <Typography> {project.project.to.split('T')[0]}</Typography>
-                  </Grid>
-                </Grid>
-              );
-            })
+            record.projects.map((project: ProfessionalProjectsProps) => (
+              <ProfessionalProject
+                project={project.project}
+                responsibility={project.responsibility}
+              />
+            ))
           }
         />
       </SimpleShowLayout>
