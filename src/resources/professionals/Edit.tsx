@@ -1,17 +1,8 @@
-import {
-  DateInput,
-  Edit,
-  NumberInput,
-  SimpleForm,
-  TextInput,
-} from 'react-admin';
+import { Edit, NumberInput, SimpleForm, TextInput } from 'react-admin';
 
 export const ProfessionalEdit = () => (
   <Edit>
     <SimpleForm>
-      <TextInput source="id" />
-      <DateInput source="createdAt" />
-      <DateInput source="updatedAt" />
       <TextInput source="firstName" />
       <TextInput source="lastName" />
       <NumberInput source="english" />
