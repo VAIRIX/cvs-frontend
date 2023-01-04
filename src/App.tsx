@@ -4,16 +4,16 @@ import {
   ProjectsCreate,
   ProjectsEdit,
   ProjectShow,
-} from './resources/projects';
+} from 'resources/projects';
 import {
   ProfessionalList,
   ProfessionalCreate,
   ProfessionalShow,
   ProfessionalEdit,
-} from './resources/professionals';
+} from 'resources/professionals';
 
-import { dataProvider } from './api/dataProvider';
-import authProvider from './api/authProvider';
+import { dataProvider } from 'api/dataProvider';
+import authProvider from 'api/authProvider';
 
 const App = () => (
   <Admin
