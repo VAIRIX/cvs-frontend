@@ -8,10 +8,14 @@ import {
   SimpleShowLayout,
   TextField,
   TopToolbar,
+  useNotify,
+  WithRecord,
   UrlField,
 } from 'react-admin';
 import { useParams } from 'react-router-dom';
+import { ProfessionalProjectsProps } from '../../professionals/types';
 import { useGenerateResume } from '../../hooks';
+import { ProfessionalProject } from '../../professionals/ProfessionalProject';
 
 export const ProfessionalShow = () => {
   const { id } = useParams();
@@ -37,6 +41,18 @@ export const ProfessionalShow = () => {
         <NumberField source="english" />
         <TextField source="about" />
         <EmailField source="email" />
+
+        <WithRecord
+          label="Projects"
+          render={(record) =>
+            record?.projects?.map((project: ProfessionalProjectsProps) => (
+              <ProfessionalProject
+                project={project?.project}
+                responsibility={project?.responsibility}
+              />
+            ))
+          }
+        />
         <UrlField target={'_blank'} source="resumeUrl" />
         {loading && <p>Generating resume...</p>}
       </SimpleShowLayout>
