@@ -48,7 +48,7 @@ export const ProfessionalShow = () => {
             record?.projects?.map((project: ProfessionalProjectsProps) => (
               <ProfessionalProject
                 project={project.project}
-                responsibility={project.responsibility}
+                responsibility={project?.responsibility}
               />
             ))
           }
