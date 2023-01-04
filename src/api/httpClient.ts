@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import Tokens from '../storage/tokenStorage';
+import tokens from '../storage/tokenStorage';
 import { API_URL } from '../constants';
 
 enum StatusCode {
@@ -20,7 +20,6 @@ enum StatusCode {
 // We get the `accessToken` from the localStorage that we set when we authenticate
 const injectToken = (config: AxiosRequestConfig): AxiosRequestConfig => {
   try {
-    const tokens = Tokens.getInstance();
     const token = tokens.getAccessToken();
 
     if (token != null && config && config.headers) {

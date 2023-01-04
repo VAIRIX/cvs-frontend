@@ -1,6 +1,7 @@
 import { DataProvider, fetchUtils, Options } from 'react-admin';
 import simpleRestProvider from 'ra-data-simple-rest';
 import { API_URL } from '../constants';
+import { stringify } from 'query-string';
 
 const httpClient = (
   url: string,
@@ -23,7 +24,15 @@ const httpClient = (
 export const dataProvider: DataProvider = {
   ...simpleRestProvider(API_URL, httpClient),
   getList: async (resource, params) => {
-    const url = `${API_URL}/${resource}`;
+    const { page, perPage } = params.pagination;
+
+    const query = {
+      ...params.filter,
+      pageSize: perPage,
+      pageNumber: page - 1,
+    };
+
+    const url = `${API_URL}/${resource}?${stringify(query)}`;
 
     return httpClient(url).then(({ json }) => {
       if ('total' in json) {

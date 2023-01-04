@@ -10,29 +10,22 @@ import {
   TopToolbar,
   useNotify,
   WithRecord,
+  UrlField,
 } from 'react-admin';
-import { http } from '../api/httpClient';
 import { useParams } from 'react-router-dom';
-import { ProfessionalProjectsProps } from './types';
-import { ProfessionalProject } from './ProfessionalProject';
+import { ProfessionalProjectsProps } from '../../professionals/types';
+import { useGenerateResume } from '../../hooks';
+import { ProfessionalProject } from '../../professionals/ProfessionalProject';
 
 export const ProfessionalShow = () => {
-  const { id } = useParams(); // this component is rendered in the /books/:id path
-  const notify = useNotify();
+  const { id } = useParams();
+  const { generateResume, loading } = useGenerateResume(id);
 
-  const generateCv = async () => {
-    try {
-      const res = await http.post('/resumes', { professionalId: id });
-      notify(res.data.resumeUrl);
-    } catch (error) {
-      notify(error.message);
-    }
-  };
   const PostShowActions = () => {
     return (
       <TopToolbar>
         <EditButton />
-        <Button label="Generate CV" onClick={generateCv} />
+        <Button label="Generate Resume" onClick={generateResume} />
       </TopToolbar>
     );
   };
@@ -60,6 +53,8 @@ export const ProfessionalShow = () => {
             ))
           }
         />
+        <UrlField target={'_blank'} source="resumeUrl" />
+        {loading && <p>Generating resume...</p>}
       </SimpleShowLayout>
     </Show>
   );
