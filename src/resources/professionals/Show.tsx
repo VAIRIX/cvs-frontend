@@ -45,10 +45,10 @@ export const ProfessionalShow = () => {
         <WithRecord
           label="Projects"
           render={(record) =>
-            record.projects.map((project: ProfessionalProjectsProps) => (
+            record?.projects?.map((project: ProfessionalProjectsProps) => (
               <ProfessionalProject
-                project={project.project}
-                responsibility={project.responsibility}
+                project={project?.project}
+                responsibility={project?.responsibility}
               />
             ))
           }

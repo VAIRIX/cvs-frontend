@@ -14,7 +14,7 @@ export const ProfessionalProject = ({
       </Typography>
       <Grid xs={4} item>
         <Typography fontWeight="bold">Description:</Typography>
-        <Typography>{project.description}</Typography>
+        <Typography>{project?.description}</Typography>
       </Grid>
       <Grid item>
         <Typography fontWeight="bold">Role: </Typography>
