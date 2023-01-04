@@ -1,6 +1,7 @@
 import React from 'react';
 import { Typography, Grid } from '@mui/material';
 import { ProfessionalProjectsProps } from './types';
+import { formatDate } from '../utils';
 
 export const ProfessionalProject = ({
   project,
@@ -21,11 +22,11 @@ export const ProfessionalProject = ({
       </Grid>
       <Grid xs={4} item>
         <Typography fontWeight="bold">From: </Typography>
-        <Typography>{project.from.split('T')[0]}</Typography>
+        <Typography>{formatDate(project?.from)}</Typography>
       </Grid>
       <Grid xs={4} item>
         <Typography fontWeight="bold">To:</Typography>
-        <Typography> {project.to.split('T')[0]}</Typography>
+        <Typography>{formatDate(project?.to)}</Typography>
       </Grid>
     </Grid>
   );
