@@ -1,4 +1,4 @@
-import Storage from './storage';
+import Storage from 'storage/storage';
 
 export enum Locals {
   ACCESS_TOKEN = 'accessToken',

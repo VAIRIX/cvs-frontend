@@ -1,8 +1,8 @@
 import { AuthProvider } from 'react-admin';
-import { ERROR_MESSAGES } from '../constants/errorMessages';
-import { FORBIDDEN, UNAUTHORIZED } from '../constants/statusCodes';
-import tokens from '../storage/tokenStorage';
-import { http } from './httpClient';
+import { FORBIDDEN, UNAUTHORIZED } from 'constants/statusCodes';
+import { ERROR_MESSAGES } from 'constants/errorMessages';
+import tokens from 'storage/tokenStorage';
+import { http } from 'api/httpClient';
 
 const UNAUTHORIZED_STATUS_CODES = [FORBIDDEN, UNAUTHORIZED];
 

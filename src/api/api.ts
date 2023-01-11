@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { http } from './httpClient';
+import { http } from 'api/httpClient';
 
 type generateResumeResponse = AxiosResponse<{ resumeUrl: string }>;
 

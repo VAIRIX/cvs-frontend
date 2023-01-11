@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import tokens from '../storage/tokenStorage';
-import { API_URL } from '../constants';
+import tokens from 'storage/tokenStorage';
+import { API_URL } from 'constants/index';
 
 enum StatusCode {
   Unauthorized = 401,
