@@ -1,16 +1,16 @@
 describe('Login form', () => {
   beforeEach(() => {
     cy.visit('http://localhost:5173/#/login');
+
+    cy.url().should('eq', 'http://localhost:5173/#/login');
   });
 
   describe('should success when submit with', () => {
     it('valid given credentials', () => {
-      cy.url().should('eq', 'http://localhost:5173/#/login');
-
-      cy.get('#username').should('be.visible').type('admin');
-      cy.get('#password').should('be.visible').type('admin');
-
-      cy.get('.MuiButtonBase-root').click();
+      cy.login({
+        username: 'admin',
+        password: 'admin',
+      });
 
       cy.url().should('eq', 'http://localhost:5173/#/professionals');
 
@@ -27,8 +27,6 @@ describe('Login form', () => {
 
   describe('should display an error when submit with', () => {
     it('empty credentials', () => {
-      cy.url().should('eq', 'http://localhost:5173/#/login');
-
       cy.get('.MuiSnackbar-root > .MuiPaper-root').should('not.exist');
 
       cy.get('.MuiButtonBase-root').click();
@@ -47,11 +45,11 @@ describe('Login form', () => {
     });
 
     it('empty username', () => {
-      cy.url().should('eq', 'http://localhost:5173/#/login');
-
       cy.get('.MuiSnackbar-root > .MuiPaper-root').should('not.exist');
 
-      cy.get('#password').should('be.visible').type('admin');
+      cy.login({
+        password: 'admin',
+      });
 
       cy.get('.MuiButtonBase-root').click();
 
@@ -65,13 +63,11 @@ describe('Login form', () => {
     });
 
     it('empty password', () => {
-      cy.url().should('eq', 'http://localhost:5173/#/login');
-
       cy.get('.MuiSnackbar-root > .MuiPaper-root').should('not.exist');
 
-      cy.get('#username').should('be.visible').type('admin');
-
-      cy.get('.MuiButtonBase-root').click();
+      cy.login({
+        username: 'admin',
+      });
 
       cy.get('#password-helper-text')
         .should('be.visible')
@@ -83,14 +79,9 @@ describe('Login form', () => {
     });
 
     it('invalid given credentials', () => {
-      cy.url().should('eq', 'http://localhost:5173/#/login');
-
       cy.get('.MuiSnackbar-root > .MuiPaper-root').should('not.exist');
 
-      cy.get('#username').should('be.visible').type('~&^%$#%!@^]/');
-      cy.get('#password').should('be.visible').type('~&^%$#%!@^]/');
-
-      cy.get('.MuiButtonBase-root').click();
+      cy.login({ username: '~&^%$#%!@^]/', password: '~&^%$#%!@^]/' });
 
       cy.get('.MuiSnackbar-root > .MuiPaper-root')
         .should('be.visible')
