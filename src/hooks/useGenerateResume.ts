@@ -1,6 +1,6 @@
 import { useNotify, useRefresh } from 'react-admin';
-import { ERROR_MESSAGES } from '../constants/errorMessages';
-import API from '../api/api';
+import { ERROR_MESSAGES } from 'constants/errorMessages';
+import API from 'api/api';
 import { useCallback, useState } from 'react';
 
 export const useGenerateResume = (id: string | undefined) => {

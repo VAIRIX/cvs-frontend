@@ -1,6 +1,6 @@
 import { DataProvider, fetchUtils, Options } from 'react-admin';
 import simpleRestProvider from 'ra-data-simple-rest';
-import { API_URL } from '../constants';
+import { API_URL } from 'constants/index';
 import { stringify } from 'query-string';
 
 const httpClient = (
