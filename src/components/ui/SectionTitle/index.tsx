@@ -6,8 +6,7 @@ type SectionTitleProps = {
   sx?: SxProps;
 };
 
-export const SectionTitle: FC<SectionTitleProps> = (props) => {
-  const { title, sx } = props;
+export const SectionTitle: FC<SectionTitleProps> = ({ title, sx }) => {
   return (
     <Typography
       sx={{

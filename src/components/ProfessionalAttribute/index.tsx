@@ -11,9 +11,8 @@ type ProfessionalAttributeProps<T> = {
 
 const ProfessionalAttribute: FC<
   ProfessionalAttributeProps<ParsedProfessionalAttribute>
-> = (props) => {
-  const { title, attributes, sx } = props;
-
+> = ({ title, attributes, sx }) => {
+  if (!attributes || !attributes.length) return null;
   return (
     <Box sx={{ mb: '10px', ...sx }}>
       <SubsectionTitle title={title} />

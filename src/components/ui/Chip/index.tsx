@@ -15,9 +15,12 @@ type ChipProps = {
     | 'warning';
 };
 
-export const Chip: FC<ChipProps> = (props) => {
-  const { label, value, sx, color = 'default' } = props;
-
+export const Chip: FC<ChipProps> = ({
+  label,
+  value,
+  sx,
+  color = 'default',
+}) => {
   return (
     <MuiChip
       sx={{ mr: '8px', mb: '8px', ...sx }}

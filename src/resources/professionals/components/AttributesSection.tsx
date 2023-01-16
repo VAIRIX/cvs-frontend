@@ -8,11 +8,8 @@ type AttributesSectionProps = {
   attributes: ProfessionalAttributeResponse[] | undefined;
 };
 
-const AttributesSection: FC<AttributesSectionProps> = (props) => {
-  const { attributes } = props;
-
-  if (!attributes) return null;
-
+const AttributesSection: FC<AttributesSectionProps> = ({ attributes }) => {
+  if (!attributes || !attributes.length) return null;
   const parsedAttributes = parseProfessionalAttributes(attributes);
 
   return (

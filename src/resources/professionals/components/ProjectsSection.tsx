@@ -9,11 +9,8 @@ type ProjectsSectionProps = {
   projects: ProjectResponse[] | undefined;
 };
 
-const ProjectsSection: FC<ProjectsSectionProps> = (props) => {
-  const { projects } = props;
-
-  if (!projects) return null;
-
+const ProjectsSection: FC<ProjectsSectionProps> = ({ projects }) => {
+  if (!projects || !projects.length) return null;
   return (
     <Box>
       <Divider sx={{ my: '24px' }} />

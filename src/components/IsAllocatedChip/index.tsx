@@ -1,13 +1,11 @@
 import { FC } from 'react';
 import { Chip } from 'components/ui';
 
-type AllocatedChipProps = {
+type IsAllocatedChipProps = {
   value: boolean | undefined;
 };
 
-export const AllocatedChipChip: FC<AllocatedChipProps> = (props) => {
-  const { value } = props;
-
+export const IsAllocatedChipChip: FC<IsAllocatedChipProps> = ({ value }) => {
   const label = value ? 'Allocated' : 'Unallocated';
   const color = value ? 'error' : 'success';
 

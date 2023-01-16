@@ -7,8 +7,7 @@ type GoogleDocResumeProps = {
   url: string | undefined;
 };
 
-const GoogleDocResume: FC<GoogleDocResumeProps> = (props) => {
-  const { loading, url } = props;
+const GoogleDocResume: FC<GoogleDocResumeProps> = ({ loading, url }) => {
   return (
     <Box sx={{ mt: '24px', height: '100%' }}>
       <SubsectionTitle title={'GOOGLE DOC LINK'} />

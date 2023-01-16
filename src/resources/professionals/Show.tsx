@@ -8,13 +8,26 @@ import { SectionTitle, Paragraph } from 'components/ui';
 import { ShowSection } from './components/ShowSection';
 import AttributesSection from './components/AttributesSection';
 import ProjectsSection from './components/ProjectsSection';
-import { AllocatedChipChip } from 'components/AllocatedChip';
+import { IsAllocatedChipChip } from 'components/IsAllocatedChip';
 
 export const ProfessionalShow = () => {
   const { id } = useParams();
   const { generateResume, loading } = useGenerateResume(id);
 
   const { record } = useShowController<ProfessionalResponse>();
+
+  if (!record) return null;
+
+  const {
+    attributes,
+    firstName,
+    lastName,
+    headline,
+    allocated,
+    about,
+    projects,
+    resumeUrl,
+  } = record;
 
   return (
     <Show component="div">
@@ -30,16 +43,14 @@ export const ProfessionalShow = () => {
               }}
             ></Avatar>
             <Box>
-              <SectionTitle
-                title={`${record?.firstName} ${record?.lastName}`}
-              />
-              <SectionTitle sx={{ fontSize: 20 }} title={record?.headline} />
+              <SectionTitle title={`${firstName} ${lastName}`} />
+              <SectionTitle sx={{ fontSize: 20 }} title={headline} />
             </Box>
-            <AllocatedChipChip value={record?.allocated} />
+            <IsAllocatedChipChip value={allocated} />
           </Box>
-          <Paragraph>{record?.about}</Paragraph>
-          <AttributesSection attributes={record?.attributes} />
-          <ProjectsSection projects={record?.projects} />
+          <Paragraph>{about}</Paragraph>
+          {attributes?.length && <AttributesSection attributes={attributes} />}
+          {projects?.length && <ProjectsSection projects={projects} />}
         </ShowSection>
         <ShowSection>
           <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
@@ -48,7 +59,7 @@ export const ProfessionalShow = () => {
               GENERATE NEW CV
             </Button>
           </Box>
-          <GoogleDocResume loading={loading} url={record?.resumeUrl} />
+          <GoogleDocResume loading={loading} url={resumeUrl} />
         </ShowSection>
       </Box>
     </Show>

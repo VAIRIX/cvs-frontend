@@ -6,15 +6,15 @@ import { Chip, Paragraph, SectionTitle, SubsectionTitle } from 'components/ui';
 
 type ProjectProps = ProjectResponse;
 
-export const Project: FC<ProjectProps> = (props) => {
-  const { project, responsibility } = props;
+export const Project: FC<ProjectProps> = ({ project, responsibility }) => {
+  if (!project) return null;
+  const { from, to, name, description } = project;
+  const projectDate = formatProjectDates(from, to);
   return (
     <Box sx={{ mb: '24px' }}>
-      <SectionTitle sx={{ fontSize: 20 }} title={project.name} />
-      <Paragraph sx={{ fontStyle: 'italic' }}>
-        {formatProjectDates(project?.from, project?.to)}
-      </Paragraph>
-      <Paragraph>{project?.description}</Paragraph>
+      <SectionTitle sx={{ fontSize: 20 }} title={name} />
+      <Paragraph sx={{ fontStyle: 'italic' }}>{projectDate}</Paragraph>
+      <Paragraph>{description}</Paragraph>
       <Box
         sx={{
           display: 'flex',

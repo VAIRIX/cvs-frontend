@@ -1,6 +1,5 @@
 import { AuthProvider } from 'react-admin';
-import { FORBIDDEN, UNAUTHORIZED } from 'constants/index';
-import { ERROR_MESSAGES } from 'constants/index';
+import { FORBIDDEN, UNAUTHORIZED, ERROR_MESSAGES } from 'constants/index';
 import tokens from 'storage/tokenStorage';
 import { http } from 'api/httpClient';
 
