@@ -9,7 +9,7 @@ import {
 
 export const ProfessionalList = () => (
   <List>
-    <Datagrid rowClick="edit">
+    <Datagrid rowClick="show">
       <TextField source="firstName" />
       <TextField source="lastName" />
       <NumberField source="english" />
