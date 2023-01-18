@@ -9,7 +9,7 @@ type AttributesSectionProps = {
 };
 
 const AttributesSection: FC<AttributesSectionProps> = ({ attributes }) => {
-  if (!attributes || !attributes.length) return null;
+  if (!attributes?.length) return null;
   const parsedAttributes = parseProfessionalAttributes(attributes);
 
   return (
