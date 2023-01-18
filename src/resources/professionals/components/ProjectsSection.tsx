@@ -10,7 +10,7 @@ type ProjectsSectionProps = {
 };
 
 const ProjectsSection: FC<ProjectsSectionProps> = ({ projects }) => {
-  if (!projects || !projects.length) return null;
+  if (!projects?.length) return null;
   return (
     <Box>
       <Divider sx={{ my: '24px' }} />
