@@ -1,7 +1,7 @@
 import { ProfessionalAttributeResponse } from './attributes';
 import { ProjectResponse } from './projects';
 
-export type ProfessionalResponse = {
+export type Professional = {
   id: string;
   firstName: string;
   lastName: string;
@@ -13,4 +13,9 @@ export type ProfessionalResponse = {
   allocated: boolean;
   attributes: ProfessionalAttributeResponse[];
   projects: ProjectResponse[];
+};
+
+export type ProfessionalResponse = {
+  professional: Professional;
+  responsibility: string;
 };

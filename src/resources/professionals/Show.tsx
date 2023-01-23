@@ -3,18 +3,19 @@ import { Box, Button, Avatar } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useGenerateResume } from 'hooks';
 import GoogleDocResume from './components/GoogleDocResume';
-import { ProfessionalResponse } from 'types/professional';
+import { Professional } from 'types/professional';
 import { SectionTitle, Paragraph } from 'components/ui';
 import { ShowSection } from './components/ShowSection';
-import AttributesSection from './components/AttributesSection';
+import AttributesSection from '../../components/AttributesSection';
 import ProjectsSection from './components/ProjectsSection';
 import { IsAllocatedChipChip } from 'components/IsAllocatedChip';
+import { AttributeType } from 'types';
 
 export const ProfessionalShow = () => {
   const { id } = useParams();
   const { generateResume, loading } = useGenerateResume(id);
 
-  const { record } = useShowController<ProfessionalResponse>();
+  const { record } = useShowController<Professional>();
 
   if (!record) return null;
 
@@ -49,7 +50,12 @@ export const ProfessionalShow = () => {
             <IsAllocatedChipChip value={allocated} />
           </Box>
           <Paragraph>{about}</Paragraph>
-          {attributes?.length && <AttributesSection attributes={attributes} />}
+          {attributes?.length && (
+            <AttributesSection
+              attributes={attributes}
+              type={AttributeType.PROFESSIONAL}
+            />
+          )}
           {projects?.length && <ProjectsSection projects={projects} />}
         </ShowSection>
         <ShowSection>
