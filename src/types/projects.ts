@@ -1,18 +1,18 @@
 import { ProjectAttributeResponse } from './attributes';
 import { ProfessionalResponse } from './professional';
 
-export interface ProjectResponse {
-  responsibility: string;
-  project: Project;
-}
-
-export type Project = {
+export type ProjectResponse = {
   id: string;
   name: string;
   from: string;
   to: string;
   duration: string;
   description: string;
-  professionals: ProfessionalResponse[];
+  professionals: ProjectProfessionalResponse[];
   attributes: ProjectAttributeResponse[];
+};
+
+export type ProjectProfessionalResponse = {
+  professional: ProfessionalResponse;
+  responsibility: string;
 };

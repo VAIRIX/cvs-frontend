@@ -9,7 +9,7 @@ type ProfessionalAttributeProps<T> = {
   sx: SxProps;
 };
 
-const ProfessionalAttribute: FC<
+const ProfessionalAttributes: FC<
   ProfessionalAttributeProps<ParsedProfessionalAttribute>
 > = ({ title, attributes, sx }) => {
   if (!attributes || !attributes.length) return null;
@@ -27,4 +27,4 @@ const ProfessionalAttribute: FC<
   );
 };
 
-export default ProfessionalAttribute;
+export default ProfessionalAttributes;

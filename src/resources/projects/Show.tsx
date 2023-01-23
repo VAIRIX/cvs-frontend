@@ -1,15 +1,13 @@
 import { Show, useShowController } from 'react-admin';
-import { ShowSection } from 'resources/professionals/components/ShowSection';
-import { Box } from '@mui/material';
+import { Box, Card } from '@mui/material';
 import { Paragraph, SectionTitle } from 'components/ui';
-import { Project } from 'types/projects';
+import { ProjectResponse } from 'types/projects';
 import { formatProjectDates } from 'utils';
-import AttributesSection from 'components/AttributesSection';
-import { AttributeType, ProfessionalResponse } from 'types';
-import { ProfessionalsList } from './components/ProfessionalsList';
+import { ProfessionalsSection } from './components/ProfessionalsSection';
+import AttributesSection from './components/AttributesSection';
 
 export const ProjectShow = () => {
-  const { record } = useShowController<Project>();
+  const { record } = useShowController<ProjectResponse>();
 
   if (!record) return null;
 
@@ -17,23 +15,17 @@ export const ProjectShow = () => {
   const projectDate = formatProjectDates(from, to);
 
   return (
-    <Show component="div">
+    <Show title="Projects" component="div">
       <Box sx={{ display: 'flex' }}>
-        <ShowSection>
-          <SectionTitle sx={{ marginBottom: '20px' }} title={name} />
-          <Paragraph>{description}</Paragraph>
+        <Card variant="outlined" sx={{ m: 0, mr: 1, p: '25px', flex: 1 }}>
+          <SectionTitle title={name} />
           <Paragraph sx={{ fontStyle: 'italic' }}>{projectDate}</Paragraph>
-          {attributes?.length && (
-            <AttributesSection
-              attributes={attributes}
-              type={AttributeType.PROJECT}
-            />
-          )}
-        </ShowSection>
-        <ShowSection>
-          <SectionTitle sx={{ marginBottom: '20px' }} title="Professionals" />
-          <ProfessionalsList professionals={professionals} />
-        </ShowSection>
+          <Paragraph>{description}</Paragraph>
+          <AttributesSection attributes={attributes} />
+        </Card>
+        <Card variant="outlined" sx={{ m: 0, mr: 1, p: '25px', flex: 1 }}>
+          <ProfessionalsSection professionals={professionals} />
+        </Card>
       </Box>
     </Show>
   );
