@@ -1,4 +1,5 @@
 import { ProjectAttributeResponse } from './attributes';
+import { ProfessionalResponse } from './professional';
 
 export interface ProjectResponse {
   responsibility: string;
@@ -12,5 +13,6 @@ export type Project = {
   to: string;
   duration: string;
   description: string;
+  professionals: ProfessionalResponse[];
   attributes: ProjectAttributeResponse[];
 };

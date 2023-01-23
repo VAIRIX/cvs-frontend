@@ -1,3 +1,8 @@
+export enum AttributeType {
+  PROFESSIONAL = 'professional',
+  PROJECT = 'project',
+}
+
 export type ProfessionalAttributeResponse = {
   id: string;
   attribute: AttributeResponse;
@@ -28,6 +33,10 @@ export type ParsedProfessionalAttributedMap = {
 export type ParsedProjectAttributedMap = {
   [key: string]: ParsedProjectAttribute[];
 };
+
+export type ParsedAttribute =
+  | ParsedProfessionalAttribute
+  | ParsedProjectAttribute;
 
 export type ParsedProfessionalAttribute = {
   id: string;
