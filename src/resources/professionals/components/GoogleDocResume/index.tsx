@@ -11,7 +11,7 @@ const GoogleDocResume: FC<GoogleDocResumeProps> = ({ loading, url }) => {
   return (
     <Box sx={{ mt: '24px', height: '100%' }}>
       <SubsectionTitle title={'GOOGLE DOC LINK'} />
-      <Link href={url} underline="hover">
+      <Link href={url} underline="hover" target={'_blank'}>
         {url}
       </Link>
       <Box

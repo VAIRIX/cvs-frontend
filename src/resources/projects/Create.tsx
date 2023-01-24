@@ -10,7 +10,7 @@ import {
 
 export const ProjectsCreate: React.FC<EditProps> = () => {
   return (
-    <Create title="Create Projects" redirect={false}>
+    <Create title="Projects" redirect={false}>
       <SimpleForm>
         <DateInput label="From" source="from" fullWidth required />
         <DateInput label="Duration" source="duration" fullWidth required />

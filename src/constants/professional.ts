@@ -1,0 +1,1 @@
+export const DEFAULT_ATTRIBUTE_LEVEL = 1;
