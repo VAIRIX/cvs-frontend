@@ -30,15 +30,9 @@ export const ProfessionalEdit: FC = () => {
     },
   });
 
-  if (isLoading) {
-    return <Loading />;
-  }
+  if (!record) return null;
 
-  if (!record) {
-    notify('Professional not found', { type: 'error' });
-    redirect('list', 'professionals');
-    return null;
-  }
+  if (isLoading) return <Loading />;
 
   const { id, projects, attributes } = record;
 
