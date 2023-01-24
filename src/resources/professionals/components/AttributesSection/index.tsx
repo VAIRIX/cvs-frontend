@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import ProfessionalAttributes from './ProfessionalAttributes';
 import { ProfessionalAttributeResponse } from 'types';
 import { parseProfessionalAttributes } from 'utils';
@@ -9,8 +9,10 @@ type AttributesSectionProps = {
 };
 
 const AttributesSection: FC<AttributesSectionProps> = ({ attributes = [] }) => {
-  const parsedAttributes = parseProfessionalAttributes(attributes);
-
+  const parsedAttributes = useMemo(
+    () => parseProfessionalAttributes(attributes),
+    [attributes],
+  );
   return (
     <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
       {Object.entries(parsedAttributes).map(([key, value]) => (

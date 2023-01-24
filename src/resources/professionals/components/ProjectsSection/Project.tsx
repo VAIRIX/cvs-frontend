@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import { Box, Button, Paper, TextField } from '@mui/material';
 import { formatProjectDates } from 'utils';
 import { ProfessionalProjectResponse } from 'types';
@@ -25,20 +25,22 @@ const Project: FC<ProjectProps> = ({
   const redirect = useRedirect();
   const { from, to, name, description, id } = project;
   const projectDate = formatProjectDates(from, to);
-  const handleShowProject = () => {
+  const handleShowProject = useCallback(() => {
     redirect('show', 'projects', id);
-  };
+  }, [id]);
 
-  const handleDeleteProject = () => {
+  const handleDeleteProject = useCallback(() => {
     if (!deleteProject) return;
     deleteProject(id);
-  };
+  }, [id, deleteProject]);
 
-  const handleSetResponsibility = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!setResponsibility) return;
-    setResponsibility(id, e.target.value);
-  };
-
+  const handleSetResponsibility = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (!setResponsibility) return;
+      setResponsibility(id, e.target.value);
+    },
+    [id, setResponsibility, id],
+  );
   return (
     <Paper
       sx={{

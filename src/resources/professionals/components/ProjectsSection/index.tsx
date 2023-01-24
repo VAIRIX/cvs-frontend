@@ -50,11 +50,11 @@ const ProjectsSection: FC<ProjectsSectionProps> = ({
     [allProjects, projects],
   );
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setIsOpen(false);
-  };
+  }, [isOpen]);
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     if (!setProfessionalProjects) return;
     if (!selectedProject) return;
     const newProfessionalProject: ProfessionalProjectResponse = {
@@ -64,7 +64,7 @@ const ProjectsSection: FC<ProjectsSectionProps> = ({
     setProfessionalProjects((prev) => [...prev, newProfessionalProject]);
     setIsOpen(false);
     setSelectedProject(null);
-  };
+  }, [selectedProject, setProfessionalProjects]);
 
   const deleteProject = (id: string) => {
     if (!setProfessionalProjects) return;

@@ -37,7 +37,6 @@ const filter = createFilterOptions<FilterOptions>();
 const createOptions = (
   attributes: ParsedProfessionalAttribute[],
 ): FilterOptions[] => {
-  console.log(123);
   return attributes.map((attribute: ParsedProfessionalAttribute) => ({
     ...attribute,
     inputValue: attribute.name,
@@ -75,10 +74,10 @@ const AddProfessionalAttribute: FC<AddProfessionalAttributeProps> = ({
     [allAttributes],
   );
 
-  const handleCloseDialog = () => {
+  const handleCloseDialog = useCallback(() => {
     setDialogValue('');
     setIsOpen(false);
-  };
+  }, []);
 
   const createNewAttributeType = async () => {
     const newAttribute: CreateAttributeRequest = {
