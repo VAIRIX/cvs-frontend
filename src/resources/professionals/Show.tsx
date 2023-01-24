@@ -1,4 +1,4 @@
-import { Show, useNotify, useRedirect, useShowController } from 'react-admin';
+import { Loading, Show, useRedirect, useShowController } from 'react-admin';
 import { Box, Button, Avatar, Card } from '@mui/material';
 import { useGenerateResume } from 'hooks';
 import GoogleDocResume from './components/GoogleDocResume';
@@ -10,14 +10,13 @@ import IsAllocatedChipChip from 'components/IsAllocatedChip';
 import EditIcon from '@mui/icons-material/Edit';
 
 export const ProfessionalShow = () => {
-  const notify = useNotify();
   const redirect = useRedirect();
-  const { record } = useShowController<ProfessionalResponse>();
-  if (!record) {
-    notify('Professional not found', { type: 'error' });
-    redirect('list', 'professionals');
-    return null;
-  }
+  const { record, isLoading } = useShowController<ProfessionalResponse>();
+  const { generateResume, loading } = useGenerateResume();
+
+  if (!record) return null;
+
+  if (isLoading) return <Loading />;
 
   const {
     id,
@@ -31,10 +30,12 @@ export const ProfessionalShow = () => {
     resumeUrl,
   } = record;
 
-  const { generateResume, loading } = useGenerateResume(id);
-
   const handleRedirectEdit = () => {
     redirect('edit', 'professionals', id);
+  };
+
+  const handleGenerateResume = () => {
+    generateResume(id);
   };
 
   return (
@@ -79,7 +80,7 @@ export const ProfessionalShow = () => {
         </Card>
         <Card variant="outlined" sx={{ m: 0, mr: 1, p: '25px', flex: 1 }}>
           <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-            <Button variant="contained" onClick={generateResume}>
+            <Button variant="contained" onClick={handleGenerateResume}>
               GENERATE NEW CV
             </Button>
           </Box>

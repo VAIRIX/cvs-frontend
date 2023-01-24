@@ -3,12 +3,12 @@ import { ERROR_MESSAGES } from 'constants/index';
 import API from 'api/api';
 import { useCallback, useState } from 'react';
 
-export const useGenerateResume = (id: string | undefined) => {
+export const useGenerateResume = () => {
   const notify = useNotify();
   const refresh = useRefresh();
   const [loading, setLoading] = useState(false);
 
-  const generateResume = useCallback(async () => {
+  const generateResume = useCallback(async (id: string) => {
     if (!id) {
       notify(ERROR_MESSAGES.PROFESSIONAL_ID_REQUIRED);
       return;
@@ -27,7 +27,7 @@ export const useGenerateResume = (id: string | undefined) => {
     } finally {
       setLoading(false);
     }
-  }, [id]);
+  }, []);
 
   return { generateResume, loading };
 };

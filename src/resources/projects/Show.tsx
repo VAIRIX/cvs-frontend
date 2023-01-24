@@ -1,4 +1,4 @@
-import { Show, useShowController } from 'react-admin';
+import { Loading, Show, useShowController } from 'react-admin';
 import { Box, Card } from '@mui/material';
 import { Paragraph, SectionTitle } from 'components/ui';
 import { ProjectResponse } from 'types/projects';
@@ -7,9 +7,11 @@ import { ProfessionalsSection } from './components/ProfessionalsSection';
 import AttributesSection from './components/AttributesSection';
 
 export const ProjectShow = () => {
-  const { record } = useShowController<ProjectResponse>();
+  const { record, isLoading } = useShowController<ProjectResponse>();
 
   if (!record) return null;
+
+  if (isLoading) return <Loading />;
 
   const { name, description, from, to, professionals, attributes } = record;
   const projectDate = formatProjectDates(from, to);
