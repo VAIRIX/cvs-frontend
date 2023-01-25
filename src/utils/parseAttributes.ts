@@ -96,7 +96,6 @@ const pushParsedProjectAttribute = (
   attributesByType: ParsedProjectAttributedMap,
 ): void => {
   const { type, name, id } = attribute;
-  console.log(attribute);
   const { id: attributeTypeId, name: attributeTypeName } = type;
   if (!attributesByType[attributeTypeName]) {
     attributesByType[attributeTypeName] = [];
