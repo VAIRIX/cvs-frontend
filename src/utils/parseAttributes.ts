@@ -26,7 +26,7 @@ export const parseProfessionalAttributes = (
 export const parseProjectAttributes = (
   attributes: ProjectAttributeResponse[] | undefined,
 ): ParsedProjectAttributedMap => {
-  if (!attributes || !attributes.length) return {};
+  if (!attributes?.length) return {};
   const attributesByType: ParsedProjectAttributedMap = {};
   attributes?.forEach((projectAttribute) => {
     const { attribute } = projectAttribute;
