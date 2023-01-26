@@ -30,19 +30,7 @@ export const parseProjectAttributes = (
   const attributesByType: ParsedProjectAttributedMap = {};
   attributes?.forEach((projectAttribute) => {
     const { attribute } = projectAttribute;
-    const { type } = attribute;
-    const { name: attributeTypeName } = type;
-    if (!attributesByType[attributeTypeName]) {
-      attributesByType[attributeTypeName] = [];
-    }
-    attributesByType[attributeTypeName].push({
-      id: attribute.id,
-      attributeTypeId: type.id,
-      from: projectAttribute.from,
-      to: projectAttribute.to,
-      name: attribute.name,
-      type: type,
-    });
+    pushParsedProjectAttribute(attribute, attributesByType);
   });
   return attributesByType;
 };
