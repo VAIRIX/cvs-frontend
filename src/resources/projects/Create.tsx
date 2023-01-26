@@ -28,7 +28,7 @@ export const ProjectsCreate: React.FC<EditProps> = () => {
     },
   });
 
-  const handleSave = async (data: any) => {
+  const handleSave = async (data: ProjectRequest) => {
     create('projects', { data });
   };
 
