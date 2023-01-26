@@ -1,16 +1,34 @@
-import { DateField, Show, SimpleShowLayout, TextField } from 'react-admin';
+import { Loading, Show, useShowController } from 'react-admin';
+import { Box, Card } from '@mui/material';
+import { Paragraph, SectionTitle } from 'components/ui';
+import { ProjectResponse } from 'types/projects';
+import { formatProjectDates } from 'utils';
+import { ProfessionalsSection } from './components/ProfessionalsSection';
+import AttributesSection from './components/AttributesSection';
 
-export const ProjectShow = () => (
-  <Show>
-    <SimpleShowLayout>
-      <TextField source="id" />
-      <DateField source="createdAt" />
-      <DateField source="updatedAt" />
-      <TextField source="name" />
-      <DateField source="from" />
-      <DateField source="to" />
-      <TextField source="duration" />
-      <TextField source="description" />
-    </SimpleShowLayout>
-  </Show>
-);
+export const ProjectShow = () => {
+  const { record, isLoading } = useShowController<ProjectResponse>();
+
+  if (!record) return null;
+
+  if (isLoading) return <Loading />;
+
+  const { name, description, from, to, professionals, attributes } = record;
+  const projectDate = formatProjectDates(from, to);
+
+  return (
+    <Show title="Projects" component="div">
+      <Box sx={{ display: 'flex' }}>
+        <Card variant="outlined" sx={{ m: 0, mr: 1, p: '25px', flex: 1 }}>
+          <SectionTitle title={name} />
+          <Paragraph sx={{ fontStyle: 'italic' }}>{projectDate}</Paragraph>
+          <Paragraph>{description}</Paragraph>
+          <AttributesSection attributes={attributes} />
+        </Card>
+        <Card variant="outlined" sx={{ m: 0, mr: 1, p: '25px', flex: 1 }}>
+          <ProfessionalsSection professionals={professionals} />
+        </Card>
+      </Box>
+    </Show>
+  );
+};

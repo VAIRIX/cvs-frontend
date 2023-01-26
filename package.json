@@ -19,6 +19,7 @@
     "cspell": "cspell '**'"
   },
   "dependencies": {
+    "@mui/icons-material": "^5.11.0",
     "axios": "^1.2.1",
     "ra-data-json-server": "^4.5.2",
     "ra-data-simple-rest": "^4.6.0",

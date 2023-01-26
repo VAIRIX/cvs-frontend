@@ -1,23 +1,20 @@
 import { useNotify, useRefresh } from 'react-admin';
 import { ERROR_MESSAGES } from 'constants/index';
 import API from 'api/api';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
+import { CreateAttributeRequest } from 'types';
 
-export const useGenerateResume = () => {
+export const useCreateAttribute = () => {
   const notify = useNotify();
   const refresh = useRefresh();
   const [loading, setLoading] = useState(false);
 
-  const generateResume = useCallback(async (id: string) => {
-    if (!id) {
-      notify(ERROR_MESSAGES.PROFESSIONAL_ID_REQUIRED);
-      return;
-    }
+  const createAttribute = async (attribute: CreateAttributeRequest) => {
     setLoading(true);
     try {
-      const data = await API.generateResume(id);
-      notify(data.resumeUrl);
+      const createdAttribute = await API.createAttribute(attribute);
       refresh();
+      return createdAttribute;
     } catch (error) {
       if (error instanceof Error) {
         notify(error.message);
@@ -27,7 +24,7 @@ export const useGenerateResume = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  };
 
-  return { generateResume, loading };
+  return { createAttribute, loading };
 };

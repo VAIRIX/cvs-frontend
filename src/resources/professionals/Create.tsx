@@ -1,24 +1,35 @@
-import React from 'react';
+import { FC } from 'react';
+import { Create, useNotify, useRedirect, useCreate } from 'react-admin';
+import { SectionTitle } from 'components/ui';
+import EditForm from './components/EditForm';
+import { ProfessionalRequest } from 'types';
 
-import {
-  SimpleForm,
-  EditProps,
-  Create,
-  TextInput,
-  NumberInput,
-} from 'react-admin';
+export const ProfessionalCreate: FC = () => {
+  const notify = useNotify();
+  const redirect = useRedirect();
+  const [create] = useCreate(undefined, undefined, {
+    onSuccess: (data) => {
+      notify(`Professional ${data.firstName} ${data.lastName} saved!`);
+      redirect('show', 'professionals', data.id);
+    },
+    onError: (error) => {
+      if (error instanceof Error) {
+        notify(`Error: ${error.message}`, { type: 'error' });
+      } else {
+        notify(`Error: ${error}`, { type: 'error' });
+      }
+    },
+  });
 
-export const ProfessionalCreate: React.FC<EditProps> = () => {
+  const handleSave = async (data: ProfessionalRequest) => {
+    create('professionals', { data });
+  };
+
   return (
-    <Create title="Create Professional" redirect={false}>
-      <SimpleForm>
-        <TextInput label="First Name" source="firstName" fullWidth required />
-        <TextInput label="Last Name" source="lastName" fullWidth required />
-        <NumberInput label="english" source="english" fullWidth required />
-        <TextInput label="Email" source="email" fullWidth required />
-        <TextInput label="About" source="about" fullWidth required />
-        <TextInput label="Headline" source="headline" fullWidth required />
-      </SimpleForm>
+    <Create title="Professionals" redirect="list">
+      <EditForm save={handleSave}>
+        <SectionTitle title="Create New Professional" />
+      </EditForm>
     </Create>
   );
 };

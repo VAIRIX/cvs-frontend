@@ -8,8 +8,8 @@ import {
 } from 'react-admin';
 
 export const ProfessionalList = () => (
-  <List>
-    <Datagrid rowClick="edit">
+  <List title="Professionals" exporter={false}>
+    <Datagrid rowClick="show">
       <TextField source="firstName" />
       <TextField source="lastName" />
       <NumberField source="english" />

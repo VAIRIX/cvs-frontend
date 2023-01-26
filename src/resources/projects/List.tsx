@@ -1,8 +1,8 @@
 import { Datagrid, List, TextField, DateField } from 'react-admin';
 
 export const ProjectsList = () => (
-  <List exporter={false}>
-    <Datagrid rowClick="edit">
+  <List title="Projects" exporter={false}>
+    <Datagrid rowClick="show">
       <DateField source="from" />
       <DateField source="duration" />
       <TextField source="description" />
