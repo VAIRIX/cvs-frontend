@@ -91,7 +91,6 @@ const AddProjectAttribute: FC<AddProjectAttributeProps> = ({
       name: response.name,
       attributeTypeId: attributeTypeId,
       id: response.id,
-      type: response.type,
       from: new Date(),
       to: new Date(),
     };
