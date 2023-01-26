@@ -27,7 +27,7 @@ type ProfessionalsSectionProps = {
   setProjectProfessionals?: Dispatch<
     SetStateAction<ProjectProfessionalResponse[]>
   >;
-  isEdit: boolean;
+  isEdit?: boolean;
   projectId?: string;
 };
 
