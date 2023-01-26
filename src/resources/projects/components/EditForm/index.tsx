@@ -136,6 +136,12 @@ const EditForm: FC<PropsWithChildren<EditFormProps>> = ({
               validate={required()}
               source={addSource<ProjectRequest>('from')}
               sx={{ flex: 1, mr: 1 }}
+              format={(value) => {
+                if (!value) {
+                  return '';
+                }
+                return formatDate(value);
+              }}
             />
             <DateInput
               validate={required()}
