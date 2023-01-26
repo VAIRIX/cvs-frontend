@@ -36,5 +36,5 @@ export type ProjectRequest = {
   duration: string;
   description: string;
   professionals: ProjectProfessionalResponse[];
-  attributes: ProjectAttributeResponse[];
+  attributes: { from: Date; to: Date; attributeId: string }[];
 };
