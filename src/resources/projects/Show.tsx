@@ -26,7 +26,7 @@ export const ProjectShow = () => {
           <AttributesSection attributes={attributes} />
         </Card>
         <Card variant="outlined" sx={{ m: 0, mr: 1, p: '25px', flex: 1 }}>
-          <ProfessionalsSection isEdit={false} professionals={professionals} />
+          <ProfessionalsSection professionals={professionals} />
         </Card>
       </Box>
     </Show>
