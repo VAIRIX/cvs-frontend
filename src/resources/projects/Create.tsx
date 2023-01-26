@@ -9,6 +9,7 @@ import {
   useCreate,
 } from 'react-admin';
 import EditForm from 'resources/projects/components/EditForm';
+import { ProjectRequest } from 'types';
 
 export const ProjectsCreate: React.FC<EditProps> = () => {
   const notify = useNotify();
