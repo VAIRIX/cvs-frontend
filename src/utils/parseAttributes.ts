@@ -104,7 +104,6 @@ const pushParsedProjectAttribute = (
     id,
     attributeTypeId,
     name,
-    type,
     from: new Date(),
     to: new Date(),
   });
