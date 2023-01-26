@@ -21,7 +21,7 @@ import {
 import AddAttributesSection from '../AddAttributesSection';
 import { ProfessionalsSection } from '../ProfessionalsSection';
 import { FC, PropsWithChildren, useState } from 'react';
-import { addSource, parseProjectAttributes } from 'utils';
+import { addSource, formatDate, parseProjectAttributes } from 'utils';
 import { Card, Box } from '@mui/material';
 
 type EditFormProps = {
