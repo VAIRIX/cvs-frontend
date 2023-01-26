@@ -156,10 +156,6 @@ const AddProjectAttribute: FC<AddProjectAttributeProps> = ({
           inputValue: params.inputValue,
           name: `Add to ${attributeTypeName}: "${params.inputValue}"`,
           id: '',
-          type: {
-            id: '',
-            name: '',
-          },
           attributeTypeId: '',
           from: new Date(),
           to: new Date(),
