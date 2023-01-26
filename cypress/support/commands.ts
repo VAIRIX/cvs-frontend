@@ -20,5 +20,9 @@ Cypress.Commands.add('login', ({ username, password }) => {
     cy.get('#password').should('be.visible').type(password);
   }
 
-  cy.get('.MuiButtonBase-root').click();
+  cy.get('[type=submit]').click();
 });
+
+Cypress.Commands.add('getBySel', (selector, ...args) =>
+  cy.get(`[data-testid=${selector}]`, ...args),
+);

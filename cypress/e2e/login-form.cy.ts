@@ -14,12 +14,9 @@ describe('Login form', () => {
 
       cy.url().should('eq', 'http://localhost:5173/#/professionals');
 
-      cy.get('.css-jp2pjq-RaUserMenu-root > .MuiButtonBase-root')
-        .should('be.visible')
-        .click();
-      cy.get('.MuiPaper-root > .MuiList-root > .MuiButtonBase-root')
-        .should('be.visible')
-        .click();
+      cy.getBySel('AccountCircleIcon').should('be.visible').click();
+
+      cy.getBySel('PowerSettingsNewIcon').should('be.visible').click();
 
       cy.url().should('eq', 'http://localhost:5173/#/login');
     });

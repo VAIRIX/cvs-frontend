@@ -15,6 +15,8 @@ declare global {
         username?: string;
         password?: string;
       }) => void;
+
+      getBySel: (selector: string) => Chainable<JQuery<HTMLElement>>;
     }
   }
 }
