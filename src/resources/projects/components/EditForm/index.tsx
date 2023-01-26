@@ -17,7 +17,6 @@ import {
   ParsedProjects,
   ProjectRequest,
   ProfessionalResponse,
-  AttributeResponse,
 } from 'types';
 import AddAttributesSection from '../AddAttributesSection';
 import { ProfessionalsSection } from '../ProfessionalsSection';
