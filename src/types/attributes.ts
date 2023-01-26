@@ -46,7 +46,6 @@ export type ParsedProfessionalAttribute = ParsedAttribute & {
 export type ParsedProjectAttribute = ParsedAttribute & {
   from: Date;
   to: Date;
-  type: AttributeTypeResponse;
 };
 
 export type CreateAttributeRequest = {
