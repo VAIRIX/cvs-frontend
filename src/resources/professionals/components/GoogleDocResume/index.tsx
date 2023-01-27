@@ -1,6 +1,7 @@
 import { Box, CircularProgress, Link } from '@mui/material';
 import { FC } from 'react';
 import { SubsectionTitle } from 'components/ui';
+import { TEXTS } from 'constants/index';
 
 type GoogleDocResumeProps = {
   loading: boolean;
@@ -9,14 +10,14 @@ type GoogleDocResumeProps = {
 
 const GoogleDocResume: FC<GoogleDocResumeProps> = ({ loading, url }) => {
   return (
-    <Box sx={{ mt: '24px', height: '100%' }}>
-      <SubsectionTitle title={'GOOGLE DOC LINK'} />
+    <Box sx={{ mt: 2, height: '100%' }}>
+      <SubsectionTitle title={TEXTS.GOOGLE_DOC_LINK} />
       <Link href={url} underline="hover" target={'_blank'}>
         {url}
       </Link>
       <Box
         sx={{
-          mt: '37px',
+          mt: 2,
           width: '100%',
           justifyContent: 'center',
           display: 'flex',
@@ -31,8 +32,8 @@ const GoogleDocResume: FC<GoogleDocResumeProps> = ({ loading, url }) => {
             style={{
               border: 'none',
               height: '100%',
-              maxHeight: '800px',
-              minHeight: '600px',
+              maxHeight: 800,
+              minHeight: 600,
             }}
             width="100%"
           />

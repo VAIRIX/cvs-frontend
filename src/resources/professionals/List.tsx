@@ -1,3 +1,5 @@
+import { ACTIONS } from 'api/resources';
+import { TEXTS } from 'constants/index';
 import {
   Datagrid,
   EmailField,
@@ -8,8 +10,8 @@ import {
 } from 'react-admin';
 
 export const ProfessionalList = () => (
-  <List title="Professionals" exporter={false}>
-    <Datagrid rowClick="show">
+  <List title={TEXTS.PROFESSIONALS_TITLE} exporter={false}>
+    <Datagrid rowClick={ACTIONS.SHOW}>
       <TextField source="firstName" />
       <TextField source="lastName" />
       <NumberField source="english" />

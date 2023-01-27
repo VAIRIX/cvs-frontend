@@ -7,6 +7,8 @@ import {
   Delete as DeleteIcon,
 } from '@mui/icons-material';
 import { useRedirect } from 'react-admin';
+import { ACTIONS, RESOURCES } from 'api/resources';
+import { TEXTS } from 'constants/index';
 
 type ProjectProps = {
   professional: ProfessionalResponse;
@@ -30,17 +32,17 @@ const Project: FC<ProjectProps> = ({
   }, [id, deleteProfessional]);
 
   const handleShowProfessional = () => {
-    redirect('show', 'professionals', id);
+    redirect(ACTIONS.SHOW, RESOURCES.PROFESSIONALS, id);
   };
 
   return (
     <Paper
       sx={{
-        mb: '24px',
+        mb: 2,
         p: 2,
         position: 'relative',
       }}
-      elevation={1}
+      elevation={3}
     >
       {isEdit && (
         <DeleteIcon
@@ -55,15 +57,15 @@ const Project: FC<ProjectProps> = ({
         />
       )}
       <Box>
-        <Button sx={{ p: '0' }} onClick={handleShowProfessional}>
+        <Button sx={{ p: 0 }} onClick={handleShowProfessional}>
           <SectionTitle
             sx={{ fontSize: 20 }}
             title={`${firstName} ${lastName} - ${headline}`}
           />
           <LaunchIcon />
         </Button>
-        <SubsectionTitle title="Role" />
-        <Chip sx={{ ml: '5px' }} label={responsibility} />
+        <SubsectionTitle title={TEXTS.ROLE_LABEL} />
+        <Chip sx={{ ml: 2 }} label={responsibility} />
       </Box>
     </Paper>
   );

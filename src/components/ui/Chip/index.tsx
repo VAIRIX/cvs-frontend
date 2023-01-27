@@ -21,10 +21,11 @@ export const Chip: FC<ChipProps> = ({
   sx,
   color = 'default',
 }) => {
+  const chipValue = value ? <Avatar>{value}</Avatar> : undefined;
   return (
     <MuiChip
-      sx={{ mr: '8px', mb: '8px', ...sx }}
-      avatar={value ? <Avatar>{value}</Avatar> : undefined}
+      sx={{ mr: 1, mb: 1, ...sx }}
+      avatar={chipValue}
       label={label}
       color={color}
     />

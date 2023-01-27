@@ -20,8 +20,9 @@ const Level: FC<LevelProps> = ({ level, setLevel, maxLevel }) => {
       onClick={handleSetLevel}
       sx={{
         cursor: 'pointer',
-        height: 30,
-        width: 30,
+        height: 25,
+        width: 25,
+        m: 1,
         color: 'white',
         backgroundColor: 'primary.main',
       }}

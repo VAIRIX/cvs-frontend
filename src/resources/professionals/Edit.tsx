@@ -11,6 +11,8 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Button, Box } from '@mui/material';
 import EditForm from './components/EditForm';
 import { Loading, SectionTitle } from 'components/ui';
+import { ACTIONS, RESOURCES } from 'api/resources';
+import { TEXTS } from 'constants/index';
 
 export const ProfessionalEdit: FC = () => {
   const notify = useNotify();
@@ -19,7 +21,7 @@ export const ProfessionalEdit: FC = () => {
   const [update] = useUpdate(undefined, undefined, {
     onSuccess: (data) => {
       notify(`Professional ${data.firstName} ${data.lastName} saved!`);
-      redirect('show', 'professionals', data.id);
+      redirect(ACTIONS.SHOW, RESOURCES.PROFESSIONALS, data.id);
     },
     onError: (error) => {
       if (error instanceof Error) {
@@ -30,22 +32,27 @@ export const ProfessionalEdit: FC = () => {
     },
   });
 
-  if (!record) return null;
-
   if (isLoading) return <Loading />;
+
+  if (!record) return null;
 
   const { id, projects, attributes } = record;
 
   const handleSave = async (data: ProfessionalRequest, id: string) => {
-    update('professionals', { id: id, data: data });
+    update(RESOURCES.PROFESSIONALS, { id: id, data: data });
   };
 
   const handleRedirectShow = () => {
-    redirect('show', 'professionals', id);
+    redirect(ACTIONS.SHOW, RESOURCES.PROFESSIONALS, id);
   };
 
   return (
-    <Edit title="Professionals" redirect="show" component={Box} actions={false}>
+    <Edit
+      title={TEXTS.PROFESSIONALS_TITLE}
+      redirect={ACTIONS.SHOW}
+      component="div"
+      actions={false}
+    >
       <EditForm
         save={handleSave}
         professionalId={id}
@@ -56,17 +63,19 @@ export const ProfessionalEdit: FC = () => {
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
-            mb: '24px',
+            mb: 2,
           }}
         >
-          <SectionTitle title="Edit Professional" />
-          <Button
-            startIcon={<VisibilityIcon />}
-            variant="outlined"
-            onClick={handleRedirectShow}
-          >
-            SHOW PROFESSIONAL
-          </Button>
+          <SectionTitle title={TEXTS.EDIT_PROFESSIONAL} />
+          <Box>
+            <Button
+              startIcon={<VisibilityIcon />}
+              variant="outlined"
+              onClick={handleRedirectShow}
+            >
+              {TEXTS.SHOW_PROFESSIONAL}
+            </Button>
+          </Box>
         </Box>
       </EditForm>
     </Edit>

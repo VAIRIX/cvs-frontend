@@ -11,6 +11,8 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Button, Box } from '@mui/material';
 import EditForm from './components/EditForm';
 import { Loading, SectionTitle } from 'components/ui';
+import { ACTIONS, RESOURCES } from 'api/resources';
+import { TEXTS } from 'constants/index';
 
 export const ProjectsEdit: FC = () => {
   const notify = useNotify();
@@ -19,7 +21,7 @@ export const ProjectsEdit: FC = () => {
   const [update] = useUpdate(undefined, undefined, {
     onSuccess: (data) => {
       notify(`Project ${data.name} saved!`);
-      redirect('show', 'projects', data.id);
+      redirect(ACTIONS.SHOW, RESOURCES.PROJECTS, data.id);
     },
     onError: (error) => {
       if (error instanceof Error) {
@@ -30,22 +32,27 @@ export const ProjectsEdit: FC = () => {
     },
   });
 
-  if (!record) return null;
-
   if (isLoading) return <Loading />;
+
+  if (!record) return null;
 
   const { id, professionals, attributes } = record;
 
   const handleSave = async (data: ProjectRequest, id: string) => {
-    update('projects', { id: id, data: data });
+    update(RESOURCES.PROJECTS, { id: id, data: data });
   };
 
   const handleRedirectShow = () => {
-    redirect('show', 'projects', id);
+    redirect(ACTIONS.SHOW, RESOURCES.PROJECTS, id);
   };
 
   return (
-    <Edit title="Projects" redirect="show" component={Box} actions={false}>
+    <Edit
+      title={TEXTS.PROJECTS_TITLE}
+      redirect={ACTIONS.SHOW}
+      component={Box}
+      actions={false}
+    >
       <EditForm
         save={handleSave}
         projectId={id}
@@ -56,17 +63,19 @@ export const ProjectsEdit: FC = () => {
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
-            mb: '24px',
+            mb: 2,
           }}
         >
-          <SectionTitle title="Edit Project" />
-          <Button
-            startIcon={<VisibilityIcon />}
-            variant="outlined"
-            onClick={handleRedirectShow}
-          >
-            SHOW PROJECT
-          </Button>
+          <SectionTitle title={TEXTS.EDIT_PROJECT} />
+          <Box>
+            <Button
+              startIcon={<VisibilityIcon />}
+              variant="outlined"
+              onClick={handleRedirectShow}
+            >
+              {TEXTS.SHOW_PROJECT}
+            </Button>
+          </Box>
         </Box>
       </EditForm>
     </Edit>

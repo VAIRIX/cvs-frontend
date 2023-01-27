@@ -1,14 +1,10 @@
 import {
   DateInput,
-  Loading,
   required,
   SaveButton,
   SimpleForm,
   TextInput,
   Toolbar,
-  useGetList,
-  useNotify,
-  useRedirect,
 } from 'react-admin';
 import {
   ProjectAttributeResponse,
@@ -16,7 +12,6 @@ import {
   ParsedProjectAttribute,
   ParsedProjects,
   ProjectRequest,
-  ProfessionalResponse,
 } from 'types';
 import AddAttributesSection from '../AddAttributesSection';
 import { ProfessionalsSection } from '../ProfessionalsSection';
@@ -38,28 +33,11 @@ const EditForm: FC<PropsWithChildren<EditFormProps>> = ({
   attributes = [],
   children,
 }) => {
-  const notify = useNotify();
-  const redirect = useRedirect();
   const [projectProfessionals, setProjectProfessionals] =
     useState(professionals);
   const [projectAttributes, setProjectAttributes] = useState(
     parseProjectAttributes(attributes),
   );
-  const {
-    data: allProfessionals,
-    isLoading: isLoadingProjects,
-    error: errorProjects,
-  } = useGetList<ProfessionalResponse>('professionals');
-
-  if (isLoadingProjects) {
-    return <Loading />;
-  }
-
-  if (errorProjects) {
-    notify(`Error: ${errorProjects}`, { type: 'error' });
-    redirect('list', 'projects');
-    return null;
-  }
 
   const handleSave = (values: unknown) => {
     const parsedValues = values as ParsedProjects;
@@ -99,7 +77,7 @@ const EditForm: FC<PropsWithChildren<EditFormProps>> = ({
       }
     >
       <Box sx={{ display: 'flex', width: '100%' }}>
-        <Card variant="outlined" sx={{ m: 0, mr: 1, p: '25px', flex: 1 }}>
+        <Card variant="outlined" sx={{ m: 0, mr: 1, p: 2, flex: 1 }}>
           {children}
           <Box
             sx={{
@@ -173,12 +151,11 @@ const EditForm: FC<PropsWithChildren<EditFormProps>> = ({
             setProjectAttributes={setProjectAttributes}
           />
         </Card>
-        <Card variant="outlined" sx={{ m: 0, mr: 1, p: '25px', flex: 1 }}>
+        <Card variant="outlined" sx={{ m: 0, ml: 1, p: 2, flex: 1 }}>
           <ProfessionalsSection
-            isEdit={true}
+            isEdit
             projectId={projectId}
             professionals={projectProfessionals}
-            allProfessionals={allProfessionals}
             setProjectProfessionals={setProjectProfessionals}
           />
         </Card>

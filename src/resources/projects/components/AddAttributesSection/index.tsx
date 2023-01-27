@@ -1,3 +1,4 @@
+import { RESOURCES } from 'api/resources';
 import { Dispatch, FC, SetStateAction, useMemo } from 'react';
 import { Loading, useGetList } from 'react-admin';
 import { ParsedProjectAttributedMap } from 'types';
@@ -13,11 +14,12 @@ const AddAttributesSection: FC<AddAttributesSectionProps> = ({
   projectAttributes,
   setProjectAttributes,
 }) => {
-  const { data: allAttributes, isLoading: isLoadingAttributes } =
-    useGetList('attributes');
+  const { data: allAttributes, isLoading: isLoadingAttributes } = useGetList(
+    RESOURCES.ATTRIBUTES,
+  );
 
   const { data: attributeTypes, isLoading: isLoadingAttributeTypes } =
-    useGetList('attributes/types');
+    useGetList(RESOURCES.ATTRIBUTE_TYPES);
 
   const parsedAllAttributes = useMemo(
     () => parseUnassignedProjectAttributes(allAttributes),

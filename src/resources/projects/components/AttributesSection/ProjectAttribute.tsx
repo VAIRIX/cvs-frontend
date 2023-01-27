@@ -16,7 +16,7 @@ const ProjectAttribute: FC<ProjectAttributeProps<ParsedProjectAttribute>> = ({
 }) => {
   if (!attributes || !attributes.length) return null;
   return (
-    <Box sx={{ mb: '10px', ...sx }}>
+    <Box sx={{ mb: 2, ...sx }}>
       <SubsectionTitle title={title} />
       {attributes.map((attribute) => (
         <Chip key={attribute.id} label={attribute.name} />

@@ -8,15 +8,17 @@ import AttributesSection from './components/AttributesSection';
 import ProjectsSection from './components/ProjectsSection';
 import IsAllocatedChipChip from 'components/IsAllocatedChip';
 import EditIcon from '@mui/icons-material/Edit';
+import { TEXTS } from 'constants/index';
+import { ACTIONS, RESOURCES } from 'api/resources';
 
 export const ProfessionalShow = () => {
   const redirect = useRedirect();
   const { record, isLoading } = useShowController<ProfessionalResponse>();
   const { generateResume, loading } = useGenerateResume();
 
-  if (!record) return null;
-
   if (isLoading) return <Loading />;
+
+  if (!record) return null;
 
   const {
     id,
@@ -31,7 +33,7 @@ export const ProfessionalShow = () => {
   } = record;
 
   const handleRedirectEdit = () => {
-    redirect('edit', 'professionals', id);
+    redirect(ACTIONS.EDIT, RESOURCES.PROFESSIONALS, id);
   };
 
   const handleGenerateResume = () => {
@@ -39,13 +41,13 @@ export const ProfessionalShow = () => {
   };
 
   return (
-    <Show title="Professionals" component="div" actions={false}>
+    <Show title={TEXTS.PROFESSIONALS_TITLE} component="div" actions={false}>
       <Box sx={{ display: 'flex' }}>
-        <Card variant="outlined" sx={{ m: 0, mr: 1, p: '25px', flex: 1 }}>
+        <Card variant="outlined" sx={{ m: 0, mr: 1, p: 2, flex: 1 }}>
           <Box
             sx={{
               display: 'flex',
-              mb: '24px',
+              mb: 2,
               justifyContent: 'space-between',
             }}
           >
@@ -55,14 +57,14 @@ export const ProfessionalShow = () => {
                   backgroundColor: 'rgba(0, 0, 0, 0.04)',
                   height: 70,
                   width: 70,
-                  mr: '16px',
+                  mr: 2,
                 }}
               ></Avatar>
-              <Box>
+              <Box sx={{ mr: 2 }}>
                 <SectionTitle title={`${firstName} ${lastName}`} />
                 <SectionTitle sx={{ fontSize: 20 }} title={headline} />
               </Box>
-              <IsAllocatedChipChip value={allocated} />
+              <IsAllocatedChipChip sx={{ fontSize: 20 }} value={allocated} />
             </Box>
             <Box>
               <Button
@@ -70,15 +72,15 @@ export const ProfessionalShow = () => {
                 variant="outlined"
                 onClick={handleRedirectEdit}
               >
-                EDIT PROFESSIONAL
+                {TEXTS.EDIT_PROFESSIONAL}
               </Button>
             </Box>
           </Box>
-          <Paragraph>{about}</Paragraph>
+          <Paragraph sx={{ mb: 2 }}>{about}</Paragraph>
           <AttributesSection attributes={attributes} />
           <ProjectsSection projects={projects} professionalId={id} />
         </Card>
-        <Card variant="outlined" sx={{ m: 0, mr: 1, p: '25px', flex: 1 }}>
+        <Card variant="outlined" sx={{ m: 0, ml: 1, p: 2, flex: 1 }}>
           <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
             <Button variant="contained" onClick={handleGenerateResume}>
               GENERATE NEW CV

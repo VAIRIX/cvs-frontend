@@ -7,7 +7,7 @@ type SubsectionTitleProps = {
 
 export const SubsectionTitle: FC<SubsectionTitleProps> = ({ title }) => {
   return (
-    <Typography sx={{ fontSize: 12, fontWeight: 600, mb: '15px' }}>
+    <Typography sx={{ fontSize: 12, fontWeight: 600, mb: 2 }}>
       {title?.toUpperCase()}:
     </Typography>
   );
