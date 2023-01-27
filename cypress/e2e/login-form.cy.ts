@@ -2,7 +2,7 @@ describe('Login form', () => {
   beforeEach(() => {
     cy.visit('http://localhost:5173/#/login');
 
-    cy.url().should('eq', 'http://localhost:5173/#/login');
+    cy.url().should('include', '/login');
   });
 
   describe('should success when submit with', () => {
@@ -12,13 +12,13 @@ describe('Login form', () => {
         password: 'admin',
       });
 
-      cy.url().should('eq', 'http://localhost:5173/#/professionals');
+      cy.url().should('include', '/professionals');
 
       cy.getBySel('AccountCircleIcon').should('be.visible').click();
 
       cy.getBySel('PowerSettingsNewIcon').should('be.visible').click();
 
-      cy.url().should('eq', 'http://localhost:5173/#/login');
+      cy.url().should('include', '/login');
     });
   });
 

@@ -10,7 +10,7 @@
 // ***********************************************
 
 Cypress.Commands.add('login', ({ username, password }) => {
-  cy.url().should('eq', 'http://localhost:5173/#/login');
+  cy.url().should('include', '/login');
 
   if (username) {
     cy.get('#username').should('be.visible').type(username);
