@@ -24,7 +24,7 @@ describe('Login form', () => {
 
   describe('should display an error when submit with', () => {
     it('empty credentials', () => {
-      cy.get('.MuiSnackbar-root > .MuiPaper-root').should('not.exist');
+      cy.get('[role="alert"]').should('not.exist');
 
       cy.get('.MuiButtonBase-root').click();
 
@@ -36,13 +36,13 @@ describe('Login form', () => {
         .should('be.visible')
         .should('contain', 'Required');
 
-      cy.get('.MuiSnackbar-root > .MuiPaper-root')
+      cy.get('[role="alert"]')
         .should('be.visible')
         .should('contain', 'The form is not valid. Please check for errors');
     });
 
     it('empty username', () => {
-      cy.get('.MuiSnackbar-root > .MuiPaper-root').should('not.exist');
+      cy.get('[role="alert"]').should('not.exist');
 
       cy.login({
         password: 'admin',
@@ -54,13 +54,13 @@ describe('Login form', () => {
         .should('be.visible')
         .should('contain', 'Required');
 
-      cy.get('.MuiSnackbar-root > .MuiPaper-root')
+      cy.get('[role="alert"]')
         .should('be.visible')
         .should('contain', 'The form is not valid. Please check for errors');
     });
 
     it('empty password', () => {
-      cy.get('.MuiSnackbar-root > .MuiPaper-root').should('not.exist');
+      cy.get('[role="alert"]').should('not.exist');
 
       cy.login({
         username: 'admin',
@@ -70,17 +70,17 @@ describe('Login form', () => {
         .should('be.visible')
         .should('contain', 'Required');
 
-      cy.get('.MuiSnackbar-root > .MuiPaper-root')
+      cy.get('[role="alert"]')
         .should('be.visible')
         .should('contain', 'The form is not valid. Please check for errors');
     });
 
     it('invalid given credentials', () => {
-      cy.get('.MuiSnackbar-root > .MuiPaper-root').should('not.exist');
+      cy.get('[role="alert"]').should('not.exist');
 
       cy.login({ username: '~&^%$#%!@^]/', password: '~&^%$#%!@^]/' });
 
-      cy.get('.MuiSnackbar-root > .MuiPaper-root')
+      cy.get('[role="alert"]')
         .should('be.visible')
         .should('contain', 'Invalid username or password');
     });
