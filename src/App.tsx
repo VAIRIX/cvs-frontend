@@ -14,6 +14,7 @@ import {
 
 import { dataProvider } from 'api/dataProvider';
 import authProvider from 'api/authProvider';
+import { RESOURCES } from 'api/resources';
 
 const App = () => (
   <Admin
@@ -22,14 +23,14 @@ const App = () => (
     authProvider={authProvider}
   >
     <Resource
-      name="professionals"
+      name={RESOURCES.PROFESSIONALS}
       list={ProfessionalList}
       create={ProfessionalCreate}
       show={ProfessionalShow}
       edit={ProfessionalEdit}
     />
     <Resource
-      name="projects"
+      name={RESOURCES.PROJECTS}
       list={ProjectsList}
       create={ProjectsCreate}
       edit={ProjectsEdit}

@@ -25,6 +25,7 @@ import {
   ParsedProjectAttributedMap,
 } from 'types';
 import { useNotify } from 'react-admin';
+import { ERROR_MESSAGES } from 'constants/index';
 
 type FilterOptions = ParsedProjectAttribute & {
   inputValue: string;
@@ -83,7 +84,7 @@ const AddProjectAttribute: FC<AddProjectAttributeProps> = ({
     const response = await createAttribute(newAttribute);
 
     if (!response) {
-      notify('Error creating new attribute', { type: 'error' });
+      notify(ERROR_MESSAGES.ERROR_CREATE_ATTRIBUTE, { type: 'error' });
       return;
     }
 

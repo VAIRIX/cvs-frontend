@@ -17,12 +17,13 @@ import {
   AutocompleteRenderInputParams,
   Box,
 } from '@mui/material';
-import { useRedirect } from 'react-admin';
+import { useGetList, useRedirect } from 'react-admin';
 import Dialog from 'components/Dialog';
+import { ACTIONS, RESOURCES } from 'api/resources';
+import { TEXTS } from 'constants/index';
 
 type ProjectsSectionProps = {
   projects: ProfessionalProjectResponse[] | undefined;
-  allProjects?: ProjectResponse[] | undefined;
   isEdit?: boolean;
   setProfessionalProjects?: Dispatch<
     SetStateAction<ProfessionalProjectResponse[]>
@@ -33,14 +34,16 @@ type ProjectsSectionProps = {
 const ProjectsSection: FC<ProjectsSectionProps> = ({
   projects = [],
   isEdit = false,
-  allProjects,
   setProfessionalProjects,
   professionalId,
 }) => {
   const redirect = useRedirect();
   const [selectedProject, setSelectedProject] =
     useState<ProjectResponse | null>(null);
+  const [professionalRole, setProfessionalRole] = useState('');
   const [isOpen, setIsOpen] = useState(false);
+
+  const { data: allProjects } = useGetList<ProjectResponse>(RESOURCES.PROJECTS);
 
   const availableProjects = useMemo(
     () =>
@@ -57,14 +60,15 @@ const ProjectsSection: FC<ProjectsSectionProps> = ({
   const handleSubmit = useCallback(() => {
     if (!setProfessionalProjects) return;
     if (!selectedProject) return;
+    if (!professionalRole) return;
     const newProfessionalProject: ProfessionalProjectResponse = {
-      responsibility: '',
+      responsibility: professionalRole,
       project: selectedProject,
     };
     setProfessionalProjects((prev) => [...prev, newProfessionalProject]);
     setIsOpen(false);
     setSelectedProject(null);
-  }, [selectedProject, setProfessionalProjects]);
+  }, [selectedProject, setProfessionalProjects, professionalRole]);
 
   const deleteProject = (id: string) => {
     if (!setProfessionalProjects) return;
@@ -73,32 +77,17 @@ const ProjectsSection: FC<ProjectsSectionProps> = ({
     );
   };
 
-  const setResponsibility = (id: string, responsibility: string) => {
-    if (!setProfessionalProjects) return;
-    setProfessionalProjects((prev) =>
-      prev.map((project) => {
-        if (project.project.id === id) {
-          return {
-            ...project,
-            responsibility,
-          };
-        }
-        return project;
-      }),
-    );
-  };
-
   const handleAddProject = () => {
     if (isEdit) {
       setIsOpen(true);
     } else {
-      redirect('edit', 'professionals', professionalId);
+      redirect(ACTIONS.EDIT, RESOURCES.PROFESSIONALS, professionalId);
     }
   };
 
   const handleGetOptionLabel = useCallback(
     (option: ProjectResponse): string => {
-      return `${option.name} - ${option.name}`;
+      return `${option.name}`;
     },
     [],
   );
@@ -112,18 +101,25 @@ const ProjectsSection: FC<ProjectsSectionProps> = ({
 
   const handleRenderInputAutocomplete = useCallback(
     (params: AutocompleteRenderInputParams) => (
-      <TextField {...params} label="Search project" fullWidth />
+      <TextField {...params} label={TEXTS.SEARCH_PROJECT} fullWidth />
     ),
+    [],
+  );
+
+  const handleRoleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setProfessionalRole(e.target.value);
+    },
     [],
   );
 
   return (
     <Box>
       <Box sx={{ display: 'flex' }}>
-        <SectionTitle title="Projects:" sx={{ mb: '24px' }} />
+        <SectionTitle title={TEXTS.PROJECTS_TITLE} sx={{ mb: 2, mr: 2 }} />
         <Box>
           <Button variant="outlined" onClick={handleAddProject}>
-            Add Project
+            {TEXTS.ADD_NEW_PROJECT}
           </Button>
         </Box>
       </Box>
@@ -134,27 +130,29 @@ const ProjectsSection: FC<ProjectsSectionProps> = ({
           project={project?.project}
           responsibility={project?.responsibility}
           deleteProject={deleteProject}
-          setResponsibility={setResponsibility}
         />
       ))}
       {availableProjects && (
         <Dialog
-          closeText="Cancel"
-          submitText="Add"
-          dialogTitle="Add new project"
+          closeText={TEXTS.CANCEL}
+          submitText={TEXTS.ADD}
+          dialogTitle={TEXTS.ADD_NEW_PROJECT}
           close={handleClose}
           isOpen={isOpen}
           submit={handleSubmit}
         >
-          <DialogContentText>
-            Search projects by project name or company name
-          </DialogContentText>
+          <DialogContentText>{TEXTS.SEARCH_PROJECT_DIALOG}</DialogContentText>
           <Autocomplete
             value={selectedProject}
             onChange={handleOnChangeAutocomplete}
             options={availableProjects}
             getOptionLabel={handleGetOptionLabel}
             renderInput={handleRenderInputAutocomplete}
+          />
+          <TextField
+            label={TEXTS.ROLE_LABEL}
+            onChange={handleRoleChange}
+            sx={{ flex: 1, mr: 1 }}
           />
         </Dialog>
       )}

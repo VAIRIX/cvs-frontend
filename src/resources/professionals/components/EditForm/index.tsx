@@ -1,15 +1,11 @@
 import {
   BooleanInput,
-  Loading,
   NumberInput,
   required,
   SaveButton,
   SimpleForm,
   TextInput,
   Toolbar,
-  useGetList,
-  useNotify,
-  useRedirect,
 } from 'react-admin';
 import {
   ProfessionalRequest,
@@ -17,13 +13,13 @@ import {
   ProfessionalAttributeResponse,
   ParsedProfessional,
   ProfessionalProjectResponse,
-  ProjectResponse,
 } from 'types';
 import AddAttributesSection from '../AddAttributesSection';
 import ProjectsSection from '../ProjectsSection';
 import { FC, PropsWithChildren, useState } from 'react';
 import { addSource, parseProfessionalAttributes } from 'utils';
 import { Card, Box } from '@mui/material';
+import { MAX_ENGLISH_LEVEL, MIN_ENGLISH_LEVEL, TEXTS } from 'constants/index';
 
 type EditFormProps = {
   save: (data: ProfessionalRequest, id: string) => void;
@@ -39,27 +35,10 @@ const EditForm: FC<PropsWithChildren<EditFormProps>> = ({
   attributes = [],
   children,
 }) => {
-  const notify = useNotify();
-  const redirect = useRedirect();
   const [professionalProjects, setProfessionalProjects] = useState(projects);
   const [professionalAttributes, setProfessionalAttributes] = useState(
     parseProfessionalAttributes(attributes),
   );
-  const {
-    data: allProjects,
-    isLoading: isLoadingProjects,
-    error: errorProjects,
-  } = useGetList<ProjectResponse>('projects');
-
-  if (isLoadingProjects) {
-    return <Loading />;
-  }
-
-  if (errorProjects) {
-    notify(`Error: ${errorProjects}`, { type: 'error' });
-    redirect('list', 'professionals');
-    return null;
-  }
 
   const handleSave = (values: unknown) => {
     const parsedValues = values as ParsedProfessional;
@@ -97,7 +76,7 @@ const EditForm: FC<PropsWithChildren<EditFormProps>> = ({
       }
     >
       <Box sx={{ display: 'flex', width: '100%' }}>
-        <Card variant="outlined" sx={{ m: 0, mr: 1, p: '25px', flex: 1 }}>
+        <Card variant="outlined" sx={{ m: 0, mr: 1, p: 2, flex: 1 }}>
           {children}
           <Box
             sx={{
@@ -149,11 +128,11 @@ const EditForm: FC<PropsWithChildren<EditFormProps>> = ({
               sx={{ flex: 1, mr: 1 }}
             />
             <NumberInput
-              label="English level"
-              min={1}
-              max={5}
+              label={TEXTS.ENGLISH_LEVEL}
+              min={MIN_ENGLISH_LEVEL}
+              max={MAX_ENGLISH_LEVEL}
               source={addSource<ProfessionalRequest>('english')}
-              sx={{ flex: 1, mr: 1 }}
+              sx={{ flex: 1, ml: 1 }}
               validate={required()}
             />
           </Box>
@@ -170,12 +149,11 @@ const EditForm: FC<PropsWithChildren<EditFormProps>> = ({
             setProfessionalAttributes={setProfessionalAttributes}
           />
         </Card>
-        <Card variant="outlined" sx={{ m: 0, mr: 1, p: '25px', flex: 1 }}>
+        <Card variant="outlined" sx={{ m: 0, ml: 1, p: 2, flex: 1 }}>
           <ProjectsSection
             projects={professionalProjects}
             isEdit
             setProfessionalProjects={setProfessionalProjects}
-            allProjects={allProjects}
             professionalId={professionalId}
           />
         </Card>

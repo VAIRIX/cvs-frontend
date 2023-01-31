@@ -9,7 +9,5 @@ export const Paragraph: FC<PropsWithChildren<ParagraphProps>> = ({
   children,
   sx,
 }) => {
-  return (
-    <Typography sx={{ fontSize: 14, mb: '18px', ...sx }}>{children}</Typography>
-  );
+  return <Typography sx={{ fontSize: 14, ...sx }}>{children}</Typography>;
 };

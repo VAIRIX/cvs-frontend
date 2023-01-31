@@ -3,6 +3,8 @@ import { Create, useNotify, useRedirect, useCreate } from 'react-admin';
 import { SectionTitle } from 'components/ui';
 import EditForm from './components/EditForm';
 import { ProfessionalRequest } from 'types';
+import { ACTIONS, RESOURCES } from 'api/resources';
+import { TEXTS } from 'constants/index';
 
 export const ProfessionalCreate: FC = () => {
   const notify = useNotify();
@@ -10,7 +12,7 @@ export const ProfessionalCreate: FC = () => {
   const [create] = useCreate(undefined, undefined, {
     onSuccess: (data) => {
       notify(`Professional ${data.firstName} ${data.lastName} saved!`);
-      redirect('show', 'professionals', data.id);
+      redirect(ACTIONS.SHOW, RESOURCES.PROFESSIONALS, data.id);
     },
     onError: (error) => {
       if (error instanceof Error) {
@@ -22,13 +24,13 @@ export const ProfessionalCreate: FC = () => {
   });
 
   const handleSave = async (data: ProfessionalRequest) => {
-    create('professionals', { data });
+    create(RESOURCES.PROFESSIONALS, { data });
   };
 
   return (
-    <Create title="Professionals" redirect="list">
+    <Create title={TEXTS.PROFESSIONALS_TITLE} redirect={ACTIONS.LIST}>
       <EditForm save={handleSave}>
-        <SectionTitle title="Create New Professional" />
+        <SectionTitle title={TEXTS.CREATE_PROFESSIONAL} />
       </EditForm>
     </Create>
   );

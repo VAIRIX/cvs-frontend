@@ -1,6 +1,3 @@
-import { SectionTitle } from 'components/ui';
-import React from 'react';
-
 import {
   EditProps,
   Create,
@@ -8,8 +5,12 @@ import {
   useRedirect,
   useCreate,
 } from 'react-admin';
+import { ACTIONS, RESOURCES } from 'api/resources';
+import { SectionTitle } from 'components/ui';
+import React from 'react';
 import EditForm from 'resources/projects/components/EditForm';
 import { ProjectRequest } from 'types';
+import { TEXTS } from 'constants/index';
 
 export const ProjectsCreate: React.FC<EditProps> = () => {
   const notify = useNotify();
@@ -17,7 +18,7 @@ export const ProjectsCreate: React.FC<EditProps> = () => {
   const [create] = useCreate(undefined, undefined, {
     onSuccess: (data) => {
       notify(`Project ${data.name} saved!`);
-      redirect('show', 'projects', data.id);
+      redirect(ACTIONS.SHOW, RESOURCES.PROJECTS, data.id);
     },
     onError: (error) => {
       if (error instanceof Error) {
@@ -29,13 +30,13 @@ export const ProjectsCreate: React.FC<EditProps> = () => {
   });
 
   const handleSave = async (data: ProjectRequest) => {
-    create('projects', { data });
+    create(RESOURCES.PROJECTS, { data });
   };
 
   return (
-    <Create title="Projects" redirect="list">
+    <Create title={TEXTS.PROJECTS_TITLE} redirect={ACTIONS.LIST}>
       <EditForm save={handleSave}>
-        <SectionTitle title="Create New Project" />
+        <SectionTitle title={TEXTS.CREATE_PROJECT} />
       </EditForm>
     </Create>
   );

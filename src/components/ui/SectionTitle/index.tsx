@@ -11,7 +11,6 @@ export const SectionTitle: FC<SectionTitleProps> = ({ title, sx }) => {
     <Typography
       sx={{
         fontSize: 28,
-        mr: '10px',
         ...sx,
       }}
     >

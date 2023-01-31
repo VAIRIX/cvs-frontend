@@ -3,6 +3,7 @@ import { Loading, useGetList } from 'react-admin';
 import AddProfessionalAttribute from './AddProfessionalAttribute';
 import { parseUnassignedProfessionalAttributes } from 'utils';
 import { ParsedProfessionalAttributedMap } from 'types';
+import { RESOURCES } from 'api/resources';
 
 type AddAttributesSectionProps = {
   professionalAttributes: ParsedProfessionalAttributedMap;
@@ -15,11 +16,12 @@ const AddAttributesSection: FC<AddAttributesSectionProps> = ({
   professionalAttributes,
   setProfessionalAttributes,
 }) => {
-  const { data: allAttributes, isLoading: isLoadingAttributes } =
-    useGetList('attributes');
+  const { data: allAttributes, isLoading: isLoadingAttributes } = useGetList(
+    RESOURCES.ATTRIBUTES,
+  );
 
   const { data: attributeTypes, isLoading: isLoadingAttributeTypes } =
-    useGetList('attributes/types');
+    useGetList(RESOURCES.ATTRIBUTE_TYPES);
 
   const parsedAllAttributes = useMemo(
     () => parseUnassignedProfessionalAttributes(allAttributes),

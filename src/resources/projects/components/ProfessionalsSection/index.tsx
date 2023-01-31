@@ -17,9 +17,10 @@ import {
   TextField,
 } from '@mui/material';
 import { SectionTitle } from 'components/ui';
-import { useRedirect, required, TextInput } from 'react-admin';
+import { useGetList, useRedirect } from 'react-admin';
 import Dialog from 'components/Dialog';
-import { addSource } from 'utils';
+import { TEXTS } from 'constants/index';
+import { ACTIONS, RESOURCES } from 'api/resources';
 
 type ProfessionalsSectionProps = {
   professionals: ProjectProfessionalResponse[] | undefined;
@@ -35,14 +36,18 @@ export const ProfessionalsSection: FC<ProfessionalsSectionProps> = ({
   professionals,
   isEdit = false,
   projectId,
-  allProfessionals,
   setProjectProfessionals,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
   const redirect = useRedirect();
+  const [isOpen, setIsOpen] = useState(false);
   const [selectedProfessional, setSelectedProfessional] =
     useState<ProfessionalResponse | null>(null);
   const [professionalRole, setProfessionalRole] = useState('');
+
+  const { data: allProfessionals } = useGetList<ProfessionalResponse>(
+    RESOURCES.PROFESSIONALS,
+  );
+
   const availableProfessionals = useMemo(
     () =>
       allProfessionals?.filter(
@@ -73,7 +78,7 @@ export const ProfessionalsSection: FC<ProfessionalsSectionProps> = ({
     if (isEdit) {
       setIsOpen(true);
     } else {
-      redirect('edit', 'projects', projectId);
+      redirect(ACTIONS.EDIT, RESOURCES.PROJECTS, projectId);
     }
   }, [projectId]);
 
@@ -95,7 +100,7 @@ export const ProfessionalsSection: FC<ProfessionalsSectionProps> = ({
 
   const handleRenderInputAutocomplete = useCallback(
     (params: NewType) => (
-      <TextField {...params} label="Search project" fullWidth />
+      <TextField {...params} label={TEXTS.SEARCH_PROJECT} fullWidth />
     ),
     [],
   );
@@ -117,12 +122,12 @@ export const ProfessionalsSection: FC<ProfessionalsSectionProps> = ({
   return (
     <Box>
       <Box sx={{ display: 'flex' }}>
-        <SectionTitle title="Professionals:" sx={{ mb: '24px' }} />
+        <SectionTitle title={TEXTS.PROFESSIONALS_TITLE} sx={{ mb: 2, mr: 2 }} />
 
         {isEdit && (
           <Box>
             <Button variant="outlined" onClick={handleAddProfessional}>
-              Add Professional
+              {TEXTS.ADD_NEW_PROFESSIONAL}
             </Button>
           </Box>
         )}
@@ -138,14 +143,16 @@ export const ProfessionalsSection: FC<ProfessionalsSectionProps> = ({
       ))}
       {availableProfessionals && (
         <Dialog
-          closeText="Cancel"
-          submitText="Add"
-          dialogTitle="Add professional"
+          closeText={TEXTS.CANCEL}
+          submitText={TEXTS.ADD}
+          dialogTitle={TEXTS.ADD_NEW_PROFESSIONAL}
           close={handleClose}
           isOpen={isOpen}
           submit={handleSubmit}
         >
-          <DialogContentText>Search professionals</DialogContentText>
+          <DialogContentText>
+            {TEXTS.SEARCH_PROFESSIONALS_DIALOG}
+          </DialogContentText>
           <Autocomplete
             value={selectedProfessional}
             onChange={handleOnChangeAutocomplete}
@@ -154,7 +161,7 @@ export const ProfessionalsSection: FC<ProfessionalsSectionProps> = ({
             renderInput={handleRenderInputAutocomplete}
           />
           <TextField
-            label="Role"
+            label={TEXTS.ROLE_LABEL}
             onChange={handleRoleChange}
             sx={{ flex: 1, mr: 1 }}
           />
