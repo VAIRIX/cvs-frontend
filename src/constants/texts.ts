@@ -20,4 +20,8 @@ export const TEXTS = {
   GOOGLE_DOC_LINK: 'Google Doc Link',
   CANCEL: 'Cancel',
   ADD: 'Add',
+  TOTAL_PROFESSIONALS: 'Total Professionals',
+  TOTAL_PROJECTS: 'Total Projects',
+  TOTAL_CLIENTS: 'Total Clients',
+  MAIN_TECHNOLOGIES: 'Main Technologies',
 };
