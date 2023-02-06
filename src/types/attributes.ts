@@ -19,6 +19,7 @@ export type AttributeResponse = {
   id: string;
   name: string;
   type: AttributeTypeResponse;
+  level?: number;
 };
 
 export type ParsedProfessionalAttributedMap = {
