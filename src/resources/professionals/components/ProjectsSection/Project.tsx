@@ -36,6 +36,7 @@ const Project: FC<ProjectProps> = ({
 
   return (
     <Paper
+      data-testid={project?.name?.toLowerCase().replace(' ', '-')}
       sx={{
         mb: 2,
         p: 2,
@@ -45,6 +46,9 @@ const Project: FC<ProjectProps> = ({
     >
       {isEdit && (
         <DeleteIcon
+          data-testid={`${project?.name
+            ?.toLowerCase()
+            .replace(' ', '-')}-delete`}
           sx={{
             position: 'absolute',
             right: 10,

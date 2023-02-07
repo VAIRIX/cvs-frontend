@@ -116,9 +116,17 @@ const ProjectsSection: FC<ProjectsSectionProps> = ({
   return (
     <Box>
       <Box sx={{ display: 'flex' }}>
-        <SectionTitle title={TEXTS.PROJECTS_TITLE} sx={{ mb: 2, mr: 2 }} />
+        <SectionTitle
+          title={TEXTS.PROJECTS_TITLE}
+          sx={{ mb: 2, mr: 2 }}
+          data-testid="projectsSection"
+        />
         <Box>
-          <Button variant="outlined" onClick={handleAddProject}>
+          <Button
+            variant="outlined"
+            onClick={handleAddProject}
+            data-testid="addProject"
+          >
             {TEXTS.ADD_NEW_PROJECT}
           </Button>
         </Box>
@@ -143,6 +151,7 @@ const ProjectsSection: FC<ProjectsSectionProps> = ({
         >
           <DialogContentText>{TEXTS.SEARCH_PROJECT_DIALOG}</DialogContentText>
           <Autocomplete
+            data-testid="search-project"
             value={selectedProject}
             onChange={handleOnChangeAutocomplete}
             options={availableProjects}

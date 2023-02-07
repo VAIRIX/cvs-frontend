@@ -1,0 +1,10 @@
+{
+  "firstName": "Jon",
+  "lastName": "Doe",
+  "email": "example@vairix.com",
+  "english": 3,
+  "about": "Systems engineering graduate with four years of software development industry experience.",
+  "headline": "Frontend developer",
+  "projects": [],
+  "attributes": []
+}

@@ -236,6 +236,7 @@ const AddProfessionalAttribute: FC<AddProfessionalAttributeProps> = ({
   return (
     <>
       <Autocomplete
+        data-testid={attributeTypeName?.toLowerCase()}
         value={selectedOptions}
         onKeyDown={handleOnKeyDown}
         freeSolo
