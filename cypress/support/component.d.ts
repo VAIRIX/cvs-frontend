@@ -7,6 +7,16 @@ declare global {
   namespace Cypress {
     interface Chainable {
       mount: typeof mount;
+
+      login: ({
+        username,
+        password,
+      }: {
+        username?: string;
+        password?: string;
+      }) => void;
+
+      getBySel: (selector: string) => Chainable<JQuery<HTMLElement>>;
     }
   }
 }
