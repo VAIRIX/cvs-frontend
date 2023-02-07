@@ -77,33 +77,77 @@ describe('Professional', () => {
       });
 
       it('invalid firstName', () => {
-        cy.getBySel('firstName').should('be.visible').type('10');
+        cy.fixture('professional').then((professional) => {
+          cy.getBySel('firstName').should('be.visible').type('00');
+          cy.getBySel('lastName')
+            .should('be.visible')
+            .type(professional.lastName);
+          cy.getBySel('headline')
+            .should('be.visible')
+            .type(professional.headline);
+          cy.getBySel('allocated').click();
+          cy.getBySel('email').should('be.visible').type(professional.email);
+          cy.getBySel('english')
+            .should('be.visible')
+            .type(professional.english);
+          cy.getBySel('about').should('be.visible').type(professional.about);
 
-        cy.getBySel('SaveIcon').click();
+          cy.getBySel('SaveIcon').click();
 
-        cy.get('[role="alert"]')
-          .contains('error', { matchCase: false })
-          .should('be.visible');
+          cy.get('[role="alert"]')
+            .contains('error', { matchCase: false })
+            .should('be.visible');
+        });
       });
 
       it('invalid lastName', () => {
-        cy.getBySel('lastName').should('be.visible').type('10');
+        cy.fixture('professional').then((professional) => {
+          cy.getBySel('firstName')
+            .should('be.visible')
+            .type(professional.firstName);
+          cy.getBySel('lastName').should('be.visible').type('00');
+          cy.getBySel('headline')
+            .should('be.visible')
+            .type(professional.headline);
+          cy.getBySel('allocated').click();
+          cy.getBySel('email').should('be.visible').type(professional.email);
+          cy.getBySel('english')
+            .should('be.visible')
+            .type(professional.english);
+          cy.getBySel('about').should('be.visible').type(professional.about);
 
-        cy.getBySel('SaveIcon').click();
+          cy.getBySel('SaveIcon').click();
 
-        cy.get('[role="alert"]')
-          .contains('error', { matchCase: false })
-          .should('be.visible');
+          cy.get('[role="alert"]')
+            .contains('error', { matchCase: false })
+            .should('be.visible');
+        });
       });
 
       it('invalid email', () => {
-        cy.getBySel('email').should('be.visible').type('invalid email');
+        cy.fixture('professional').then((professional) => {
+          cy.getBySel('firstName')
+            .should('be.visible')
+            .type(professional.firstName);
+          cy.getBySel('lastName')
+            .should('be.visible')
+            .type(professional.lastName);
+          cy.getBySel('headline')
+            .should('be.visible')
+            .type(professional.headline);
+          cy.getBySel('allocated').click();
+          cy.getBySel('email').should('be.visible').type('invalid email');
+          cy.getBySel('english')
+            .should('be.visible')
+            .type(professional.english);
+          cy.getBySel('about').should('be.visible').type(professional.about);
 
-        cy.getBySel('SaveIcon').click();
+          cy.getBySel('SaveIcon').click();
 
-        cy.get('[role="alert"]')
-          .contains('error', { matchCase: false })
-          .should('be.visible');
+          cy.get('[role="alert"]')
+            .contains('error', { matchCase: false })
+            .should('be.visible');
+        });
       });
     });
   });
