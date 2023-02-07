@@ -1,4 +1,19 @@
 describe('Professional', () => {
+  const invalidFields = {
+    firstName: '00',
+    lastName: '00',
+    email: 'invalid email',
+  };
+
+  const updatedFields = {
+    firstName: 'updatedFirstName',
+    lastName: 'updatedLastName',
+    email: 'updated@email.com',
+    english: '1',
+    about: 'Updated about',
+    headline: 'Updated headline',
+  };
+
   beforeEach(() => {
     cy.visit('http://localhost:5173/#/login');
 
@@ -78,7 +93,9 @@ describe('Professional', () => {
 
       it('invalid firstName', () => {
         cy.fixture('professional').then((professional) => {
-          cy.getBySel('firstName').should('be.visible').type('00');
+          cy.getBySel('firstName')
+            .should('be.visible')
+            .type(invalidFields.firstName);
           cy.getBySel('lastName')
             .should('be.visible')
             .type(professional.lastName);
@@ -105,7 +122,9 @@ describe('Professional', () => {
           cy.getBySel('firstName')
             .should('be.visible')
             .type(professional.firstName);
-          cy.getBySel('lastName').should('be.visible').type('00');
+          cy.getBySel('lastName')
+            .should('be.visible')
+            .type(invalidFields.lastName);
           cy.getBySel('headline')
             .should('be.visible')
             .type(professional.headline);
@@ -136,7 +155,7 @@ describe('Professional', () => {
             .should('be.visible')
             .type(professional.headline);
           cy.getBySel('allocated').click();
-          cy.getBySel('email').should('be.visible').type('invalid email');
+          cy.getBySel('email').should('be.visible').type(invalidFields.email);
           cy.getBySel('english')
             .should('be.visible')
             .type(professional.english);
@@ -153,21 +172,6 @@ describe('Professional', () => {
   });
 
   describe('update form', () => {
-    const updatedFields = {
-      firstName: 'updatedFirstName',
-      lastName: 'updatedLastName',
-      email: 'updated@email.com',
-      english: '1',
-      about: 'Updated about',
-      headline: 'Updated headline',
-    };
-
-    const invalidFields = {
-      firstName: '00',
-      lastName: '00',
-      email: 'invalid email',
-    };
-
     beforeEach(() => {
       cy.get('.MuiList-root').contains('Professionals').click();
 
