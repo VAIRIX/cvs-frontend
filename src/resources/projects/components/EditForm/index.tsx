@@ -86,6 +86,7 @@ const EditForm: FC<PropsWithChildren<EditFormProps>> = ({
             }}
           >
             <TextInput
+              data-testid="name"
               source={addSource<ProjectRequest>('name')}
               sx={{ flex: 1, mr: 1 }}
               validate={required()}
@@ -99,6 +100,7 @@ const EditForm: FC<PropsWithChildren<EditFormProps>> = ({
             }}
           >
             <TextInput
+              data-testid="description"
               validate={required()}
               source={addSource<ProjectRequest>('description')}
               sx={{ flex: 1, mr: 1 }}
@@ -111,6 +113,7 @@ const EditForm: FC<PropsWithChildren<EditFormProps>> = ({
             }}
           >
             <DateInput
+              data-testid="fromDate"
               validate={required()}
               source={addSource<ProjectRequest>('from')}
               sx={{ flex: 1, mr: 1 }}
@@ -122,6 +125,7 @@ const EditForm: FC<PropsWithChildren<EditFormProps>> = ({
               }}
             />
             <DateInput
+              data-testid="toDate"
               validate={required()}
               source={addSource<ProjectRequest>('to')}
               sx={{ flex: 1, mr: 1 }}
@@ -141,6 +145,7 @@ const EditForm: FC<PropsWithChildren<EditFormProps>> = ({
             }}
           >
             <TextInput
+              data-testid="duration"
               validate={required()}
               source={addSource<ProjectRequest>('duration')}
               sx={{ flex: 1, mr: 1 }}

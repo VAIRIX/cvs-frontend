@@ -210,6 +210,7 @@ const AddProjectAttribute: FC<AddProjectAttributeProps> = ({
   return (
     <>
       <Autocomplete
+        data-testid={attributeTypeName?.toLowerCase()}
         value={selectedOptions}
         onKeyDown={handleOnKeyDown}
         freeSolo
