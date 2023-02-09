@@ -28,7 +28,11 @@ export const ProjectShow = () => {
   return (
     <Show title={TEXTS.PROJECTS_TITLE} component="div" actions={false}>
       <Box sx={{ display: 'flex' }}>
-        <Card variant="outlined" sx={{ m: 0, mr: 1, p: 2, flex: 1 }}>
+        <Card
+          data-testid="projectBox"
+          variant="outlined"
+          sx={{ m: 0, mr: 1, p: 2, flex: 1 }}
+        >
           <Box
             sx={{
               display: 'flex',
