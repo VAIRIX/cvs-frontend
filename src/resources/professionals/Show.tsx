@@ -43,7 +43,11 @@ export const ProfessionalShow = () => {
   return (
     <Show title={TEXTS.PROFESSIONALS_TITLE} component="div" actions={false}>
       <Box sx={{ display: 'flex' }}>
-        <Card variant="outlined" sx={{ m: 0, mr: 1, p: 2, flex: 1 }}>
+        <Card
+          data-testid="professionalBox"
+          variant="outlined"
+          sx={{ m: 0, mr: 1, p: '25px', flex: 1 }}
+        >
           <Box
             sx={{
               display: 'flex',
@@ -53,6 +57,7 @@ export const ProfessionalShow = () => {
           >
             <Box sx={{ display: 'flex' }}>
               <Avatar
+                data-testid="professionalAvatar"
                 sx={{
                   backgroundColor: 'rgba(0, 0, 0, 0.04)',
                   height: 70,
@@ -60,14 +65,18 @@ export const ProfessionalShow = () => {
                   mr: 2,
                 }}
               ></Avatar>
-              <Box sx={{ mr: 2 }}>
+              <Box data-testid="professionalTitle">
                 <SectionTitle title={`${firstName} ${lastName}`} />
                 <SectionTitle sx={{ fontSize: 20 }} title={headline} />
               </Box>
-              <IsAllocatedChipChip sx={{ fontSize: 20 }} value={allocated} />
+              <IsAllocatedChipChip
+                data-testid="professionalAllocated"
+                value={allocated}
+              />
             </Box>
             <Box>
               <Button
+                data-testid="editProfessional"
                 startIcon={<EditIcon />}
                 variant="outlined"
                 onClick={handleRedirectEdit}
@@ -76,7 +85,9 @@ export const ProfessionalShow = () => {
               </Button>
             </Box>
           </Box>
-          <Paragraph sx={{ mb: 2 }}>{about}</Paragraph>
+          <Box data-testid="professionalAbout">
+            <Paragraph>{about}</Paragraph>
+          </Box>
           <AttributesSection attributes={attributes} />
           <ProjectsSection projects={projects} professionalId={id} />
         </Card>

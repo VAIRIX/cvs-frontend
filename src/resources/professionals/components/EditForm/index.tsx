@@ -85,11 +85,13 @@ const EditForm: FC<PropsWithChildren<EditFormProps>> = ({
             }}
           >
             <TextInput
+              data-testid="firstName"
               source={addSource<ProfessionalRequest>('firstName')}
               sx={{ flex: 1, mr: 1 }}
               validate={required()}
             />
             <TextInput
+              data-testid="lastName"
               validate={required()}
               source={addSource<ProfessionalRequest>('lastName')}
               sx={{ flex: 1, ml: 1 }}
@@ -103,11 +105,13 @@ const EditForm: FC<PropsWithChildren<EditFormProps>> = ({
             }}
           >
             <TextInput
+              data-testid="headline"
               validate={required()}
               source={addSource<ProfessionalRequest>('headline')}
               sx={{ flex: 1, mr: 1 }}
             />
             <BooleanInput
+              data-testid="allocated"
               sx={{
                 flex: 1,
                 ml: 1,
@@ -123,11 +127,13 @@ const EditForm: FC<PropsWithChildren<EditFormProps>> = ({
             }}
           >
             <TextInput
+              data-testid="email"
               validate={required()}
               source={addSource<ProfessionalRequest>('email')}
               sx={{ flex: 1, mr: 1 }}
             />
             <NumberInput
+              data-testid="english"
               label={TEXTS.ENGLISH_LEVEL}
               min={MIN_ENGLISH_LEVEL}
               max={MAX_ENGLISH_LEVEL}
@@ -138,6 +144,7 @@ const EditForm: FC<PropsWithChildren<EditFormProps>> = ({
           </Box>
 
           <TextInput
+            data-testid="about"
             validate={required()}
             source={addSource<ProfessionalRequest>('about')}
             multiline

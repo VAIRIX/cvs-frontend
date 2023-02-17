@@ -30,10 +30,10 @@ const Dialog: FC<PropsWithChildren<DialogProps>> = ({
       <DialogTitle>{dialogTitle}</DialogTitle>
       <DialogContent>{children}</DialogContent>
       <DialogActions>
-        <Button onClick={close} color="primary">
+        <Button data-testid="dialog-cancel" onClick={close} color="primary">
           {closeText}
         </Button>
-        <Button onClick={submit} color="primary">
+        <Button data-testid="dialog-add" onClick={submit} color="primary">
           {submitText}
         </Button>
       </DialogActions>
