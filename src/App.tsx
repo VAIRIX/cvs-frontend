@@ -15,6 +15,7 @@ import {
 import { dataProvider } from 'api/dataProvider';
 import authProvider from 'api/authProvider';
 import { RESOURCES } from 'api/resources';
+import { AttributesList } from 'resources/attributes/List';
 
 const App = () => (
   <Admin
@@ -36,6 +37,7 @@ const App = () => (
       edit={ProjectsEdit}
       show={ProjectShow}
     />
+    <Resource name={RESOURCES.ATTRIBUTES} list={AttributesList} />
   </Admin>
 );
 export default App;

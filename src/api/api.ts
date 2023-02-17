@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { http } from 'api/httpClient';
 import { AttributeResponse, CreateAttributeRequest } from 'types';
+import { EditAttributeRequest } from 'hooks/useEditAttribute';
 
 type GenerateResumeResponse = AxiosResponse<{ resumeUrl: string }>;
 type CreateAttributeResponse = AxiosResponse<AttributeResponse>;
@@ -22,7 +23,17 @@ const createAttribute = async (attribute: CreateAttributeRequest) => {
   return response.data;
 };
 
+const editAttribute = async (attribute: EditAttributeRequest) => {
+  const response: CreateAttributeResponse = await http.put(
+    `/attributes/${attribute.id}`,
+    attribute,
+  );
+
+  return response.data;
+};
+
 export default {
   generateResume,
   createAttribute,
+  editAttribute,
 };
