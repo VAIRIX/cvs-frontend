@@ -122,7 +122,6 @@ const EditForm: FC<PropsWithChildren<EditFormProps>> = ({
               }}
             />
             <DateInput
-              validate={required()}
               source={addSource<ProjectRequest>('to')}
               sx={{ flex: 1, mr: 1 }}
               format={(value) => {
