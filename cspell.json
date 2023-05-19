@@ -1,6 +1,12 @@
 {
   "version": "0.2",
-  "words": ["Datagrid", "VITE", "testid"],
+  "words": [
+    "Datagrid",
+    "VITE",
+    "testid",
+    "vairix",
+    "webp"
+  ],
   "language": "en",
   "ignorePaths": [
     "**/node_modules/**",
