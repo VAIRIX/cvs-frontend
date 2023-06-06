@@ -94,7 +94,7 @@ export const ProfessionalShow = () => {
         <Card variant="outlined" sx={{ m: 0, ml: 1, p: 2, flex: 1 }}>
           <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
             <Button variant="contained" onClick={handleGenerateResume}>
-              GENERATE NEW CV
+              {TEXTS.GENERATE_NEW_CV}
             </Button>
           </Box>
           <GoogleDocResume loading={loading} url={resumeUrl} />

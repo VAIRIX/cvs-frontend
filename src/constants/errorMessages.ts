@@ -5,4 +5,4 @@ export const ERROR_MESSAGES = {
   PROFESSIONAL_ID_REQUIRED: 'Professional ID is required',
   PROFESSIONAL_NOT_FOUND: 'Professional not found',
   ERROR_CREATE_ATTRIBUTE: 'Error creating attribute',
-};
+} as const;

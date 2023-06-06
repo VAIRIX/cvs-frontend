@@ -24,4 +24,4 @@ export const TEXTS = {
   TOTAL_PROJECTS: 'Total Projects',
   TOTAL_CLIENTS: 'Total Clients',
   MAIN_TECHNOLOGIES: 'Main Technologies',
-};
+} as const;
