@@ -10,10 +10,11 @@ export type ProjectResponse = {
   description: string;
   professionals: ProjectProfessionalResponse[];
   attributes: ProjectAttributeResponse[];
+  vairixProject: boolean;
 };
 
 export type ProjectProfessionalResponse = {
-  professional: ProfessionalResponse;
+  professional: Partial<ProfessionalResponse>;
   responsibility: string;
 };
 
@@ -26,6 +27,7 @@ export type ParsedProjects = {
   description: string;
   professionals: ProjectProfessionalResponse[];
   attributes: ProjectAttributeResponse[];
+  role?: string;
 };
 
 export type ProjectRequest = {

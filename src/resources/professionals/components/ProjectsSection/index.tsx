@@ -8,17 +8,10 @@ import {
 } from 'react';
 import { ProfessionalProjectResponse, ProjectResponse } from 'types';
 import Project from './Project';
+import StepsDialog from './Steps';
 import { SectionTitle } from 'components/ui';
-import {
-  Autocomplete,
-  Button,
-  TextField,
-  DialogContentText,
-  AutocompleteRenderInputParams,
-  Box,
-} from '@mui/material';
+import { Button, Box } from '@mui/material';
 import { useGetList, useRedirect } from 'react-admin';
-import Dialog from 'components/Dialog';
 import { ACTIONS, RESOURCES } from 'api/resources';
 import { TEXTS } from 'constants/index';
 
@@ -38,9 +31,6 @@ const ProjectsSection: FC<ProjectsSectionProps> = ({
   professionalId,
 }) => {
   const redirect = useRedirect();
-  const [selectedProject, setSelectedProject] =
-    useState<ProjectResponse | null>(null);
-  const [professionalRole, setProfessionalRole] = useState('');
   const [isOpen, setIsOpen] = useState(false);
 
   const { data: allProjects } = useGetList<ProjectResponse>(RESOURCES.PROJECTS);
@@ -57,19 +47,6 @@ const ProjectsSection: FC<ProjectsSectionProps> = ({
     setIsOpen(false);
   }, [isOpen]);
 
-  const handleSubmit = useCallback(() => {
-    if (!setProfessionalProjects) return;
-    if (!selectedProject) return;
-    if (!professionalRole) return;
-    const newProfessionalProject: ProfessionalProjectResponse = {
-      responsibility: professionalRole,
-      project: selectedProject,
-    };
-    setProfessionalProjects((prev) => [...prev, newProfessionalProject]);
-    setIsOpen(false);
-    setSelectedProject(null);
-  }, [selectedProject, setProfessionalProjects, professionalRole]);
-
   const deleteProject = (id: string) => {
     if (!setProfessionalProjects) return;
     setProfessionalProjects((prev) =>
@@ -84,34 +61,6 @@ const ProjectsSection: FC<ProjectsSectionProps> = ({
       redirect(ACTIONS.EDIT, RESOURCES.PROFESSIONALS, professionalId);
     }
   };
-
-  const handleGetOptionLabel = useCallback(
-    (option: ProjectResponse): string => {
-      return `${option.name}`;
-    },
-    [],
-  );
-
-  const handleOnChangeAutocomplete = useCallback(
-    (_: unknown, newValue: ProjectResponse | null) => {
-      setSelectedProject(newValue);
-    },
-    [],
-  );
-
-  const handleRenderInputAutocomplete = useCallback(
-    (params: AutocompleteRenderInputParams) => (
-      <TextField {...params} label={TEXTS.SEARCH_PROJECT} fullWidth />
-    ),
-    [],
-  );
-
-  const handleRoleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setProfessionalRole(e.target.value);
-    },
-    [],
-  );
 
   return (
     <Box>
@@ -141,29 +90,11 @@ const ProjectsSection: FC<ProjectsSectionProps> = ({
         />
       ))}
       {availableProjects && (
-        <Dialog
-          closeText={TEXTS.CANCEL}
-          submitText={TEXTS.ADD}
-          dialogTitle={TEXTS.ADD_NEW_PROJECT}
-          close={handleClose}
-          isOpen={isOpen}
-          submit={handleSubmit}
-        >
-          <DialogContentText>{TEXTS.SEARCH_PROJECT_DIALOG}</DialogContentText>
-          <Autocomplete
-            data-testid="search-project"
-            value={selectedProject}
-            onChange={handleOnChangeAutocomplete}
-            options={availableProjects}
-            getOptionLabel={handleGetOptionLabel}
-            renderInput={handleRenderInputAutocomplete}
-          />
-          <TextField
-            label={TEXTS.ROLE_LABEL}
-            onChange={handleRoleChange}
-            sx={{ flex: 1, mr: 1 }}
-          />
-        </Dialog>
+        <StepsDialog
+          professionalId={professionalId || ''}
+          open={isOpen}
+          handleClose={handleClose}
+        ></StepsDialog>
       )}
     </Box>
   );
