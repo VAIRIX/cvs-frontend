@@ -14,7 +14,7 @@ export const TEXTS = {
   SEARCH_PROJECT: 'Search Project',
   SEARCH_PROJECT_DIALOG: 'Search projects',
   SEARCH_PROFESSIONALS_DIALOG: 'Search professionals',
-  ADD_NEW_PROJECT: 'Add new project',
+  ADD_NEW_PROJECT: 'Add experience',
   ADD_NEW_PROFESSIONAL: 'Add new professional',
   ROLE_LABEL: 'Role',
   GOOGLE_DOC_LINK: 'Google Doc Link',
