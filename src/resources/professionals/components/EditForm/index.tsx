@@ -4,6 +4,7 @@ import {
   required,
   SaveButton,
   SimpleForm,
+  SortButton,
   TextInput,
   Toolbar,
 } from 'react-admin';
