@@ -1,5 +1,5 @@
-import { FC, useCallback } from 'react';
-import { Button, Paper } from '@mui/material';
+import { FC, useCallback, useState } from 'react';
+import { Button, Paper, Checkbox } from '@mui/material';
 import { formatProjectDates } from 'utils';
 import { ProfessionalProjectResponse } from 'types';
 import { Chip, Paragraph, SectionTitle, SubsectionTitle } from 'components/ui';
@@ -10,17 +10,21 @@ import {
 import { useRedirect } from 'react-admin';
 import { TEXTS } from 'constants/index';
 import { ACTIONS, RESOURCES } from 'api/resources';
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 
 type ProjectProps = ProfessionalProjectResponse & {
   isEdit: boolean;
   deleteProject?: (id: string) => void;
+  setProjectExport?: (id: string, exportToDrive: boolean) => void;
 };
 
 const Project: FC<ProjectProps> = ({
+  exportToDrive,
   project,
   responsibility,
   isEdit,
   deleteProject,
+  setProjectExport,
 }) => {
   const redirect = useRedirect();
   const { from, to, name, description, id } = project;
@@ -34,6 +38,18 @@ const Project: FC<ProjectProps> = ({
     deleteProject(id);
   }, [id, deleteProject]);
 
+  const [isChecked, setIsChecked] = useState(exportToDrive);
+
+  const handleExportProject = useCallback(
+    (event: any) => {
+      const currentChecked = event.target.checked;
+      setIsChecked(currentChecked);
+      if (!setProjectExport) return;
+      setProjectExport(project.id, currentChecked);
+    },
+    [id, setProjectExport],
+  );
+
   return (
     <Paper
       data-testid={project?.name?.toLowerCase().replace(' ', '-')}
@@ -45,10 +61,35 @@ const Project: FC<ProjectProps> = ({
       elevation={3}
     >
       {isEdit && (
-        <DeleteIcon
-          data-testid={`${project?.name
-            ?.toLowerCase()
-            .replace(' ', '-')}-delete`}
+        <>
+          <DeleteIcon
+            data-testid={`${project?.name
+              ?.toLowerCase()
+              .replace(' ', '-')}-delete`}
+            sx={{
+              position: 'absolute',
+              right: 10,
+              top: 10,
+              color: '#d32f2f',
+              cursor: 'pointer',
+            }}
+            onClick={handleDeleteProject}
+          />
+          <DragIndicatorIcon
+            sx={{
+              position: 'absolute',
+              right: 10,
+              top: 60,
+              cursor: 'pointer',
+            }}
+          />
+        </>
+      )}
+      {!isEdit && (
+        <Checkbox
+          defaultChecked
+          checked={isChecked}
+          onClick={handleExportProject}
           sx={{
             position: 'absolute',
             right: 10,
@@ -56,7 +97,6 @@ const Project: FC<ProjectProps> = ({
             color: '#d32f2f',
             cursor: 'pointer',
           }}
-          onClick={handleDeleteProject}
         />
       )}
       <Button sx={{ p: 0 }} onClick={handleShowProject}>

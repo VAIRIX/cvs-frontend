@@ -43,4 +43,6 @@ export type ProfessionalRequest = {
 export interface ProfessionalProjectResponse {
   responsibility: string;
   project: ProjectResponse;
+  index?: number;
+  exportToDrive: boolean;
 }

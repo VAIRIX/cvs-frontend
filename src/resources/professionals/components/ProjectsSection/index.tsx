@@ -99,6 +99,8 @@ const ProjectsSection: FC<ProjectsSectionProps> = ({
         isEdit={isEdit}
         sortParam={sortingOption}
         deleteProject={deleteProject}
+        setProfessionalProjects={setProfessionalProjects}
+        professionalId={professionalId || ''}
       ></ProjectList>
       {availableProjects && (
         <StepsDialog

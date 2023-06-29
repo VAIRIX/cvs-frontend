@@ -15,7 +15,6 @@ const PositionedMenu: FC<PositionedMenuProps> = ({ setSortingOption }) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = (data: React.MouseEvent<HTMLElement>) => {
-    console.log(data.currentTarget.id);
     setSortingOption(data.currentTarget.id);
     setAnchorEl(null);
   };

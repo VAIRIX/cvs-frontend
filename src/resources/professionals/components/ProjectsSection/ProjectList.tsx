@@ -1,15 +1,21 @@
-import { FC, useEffect, useState } from 'react';
-import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd';
+import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
+import { useDrag, useDrop } from 'react-dnd';
 import { ProfessionalProjectResponse } from 'types';
 import { Box } from '@mui/material';
 import Project from './Project';
 import React from 'react';
+import { SORTING_OPTIONS } from 'constants/sortingOptions';
+import { useUpdateProfessionalProject } from 'hooks/useUpdateProfessionalProject';
 
 type ProjectListProps = {
   projects: ProfessionalProjectResponse[] | undefined;
   sortParam: string;
   isEdit: boolean;
   deleteProject: any;
+  setProfessionalProjects?: Dispatch<
+    SetStateAction<ProfessionalProjectResponse[]>
+  >;
+  professionalId?: string | undefined;
 };
 
 type DragItem = {
@@ -23,38 +29,65 @@ const ProjectList: FC<ProjectListProps> = ({
   sortParam,
   isEdit,
   deleteProject,
+  setProfessionalProjects,
+  professionalId,
 }) => {
-  const [testProjects, setTestProjects] =
+  const [projectsInList, setProjectsInList] =
     useState<ProfessionalProjectResponse[]>(projects);
 
+  const { updateProfessionalProject } = useUpdateProfessionalProject();
+
   const moveProject = (dragIndex: number, hoverIndex: number) => {
-    const draggedProject = testProjects[dragIndex];
-    const updatedProjects = [...testProjects];
+    const draggedProject = projectsInList[dragIndex];
+    draggedProject.index = dragIndex;
+    const updatedProjects = [...projectsInList];
     updatedProjects.splice(dragIndex, 1);
     updatedProjects.splice(hoverIndex, 0, draggedProject);
-    setTestProjects(updatedProjects);
+    setProjectsInList(updatedProjects);
+    if (setProfessionalProjects) {
+      setProfessionalProjects(updatedProjects);
+    }
   };
+
+  const updateProject = (id: string, exportToDrive: boolean) => {
+    if (!professionalId) return;
+    updateProfessionalProject({
+      projectId: id,
+      professionalId: professionalId,
+      exportToDrive,
+    });
+  };
+
+  useEffect(() => {
+    setProjectsInList(projects);
+  }, []);
 
   useEffect(() => {
     function handleSortParamChange() {
       let sortedProjects: ProfessionalProjectResponse[] = [];
-
-      if (sortParam === 'DATE_ASCENDING') {
-        sortedProjects = projects.sort((a, b) => {
+      if (sortParam === SORTING_OPTIONS.DATE_ASCENDING) {
+        sortedProjects = [...projects].sort((a, b) => {
           const dateA = new Date(a.project.from);
           const dateB = new Date(b.project.from);
 
           return dateA.getDate() - dateB.getDate();
         });
-        console.log(sortedProjects);
-        setTestProjects(sortedProjects);
-      } else if (sortParam === 'DATE_DESCENDING') {
-        sortedProjects = projects.sort((a, b) => {
+        setProjectsInList(sortedProjects);
+        if (setProfessionalProjects) {
+          setProfessionalProjects(sortedProjects);
+        }
+      } else if (sortParam === SORTING_OPTIONS.DATE_DESCENDING) {
+        sortedProjects = [...projects].sort((a, b) => {
           const dateA = new Date(a.project.from);
           const dateB = new Date(b.project.from);
           return dateB.getDate() - dateA.getDate();
         });
-        setTestProjects(sortedProjects);
+        setProjectsInList(sortedProjects);
+        if (setProfessionalProjects) {
+          setProfessionalProjects(sortedProjects);
+        }
+      } else {
+        setProjectsInList([...projects]);
       }
     }
 
@@ -67,7 +100,12 @@ const ProjectList: FC<ProjectListProps> = ({
   }> = ({ project, index }) => {
     const [{ isDragging }, drag] = useDrag({
       type: 'project',
-      item: { type: 'project', id: project.project.id, index },
+      item: {
+        type: 'project',
+        id: project.project.id,
+        index,
+        project: project.project,
+      },
       collect: (monitor: any) => ({
         isDragging: monitor.isDragging(),
       }),
@@ -75,7 +113,7 @@ const ProjectList: FC<ProjectListProps> = ({
 
     const [, drop] = useDrop({
       accept: 'project',
-      hover(item: any, monitor: DropTargetMonitor) {
+      hover(item: DragItem) {
         const dragIndex = item.index;
         const hoverIndex = index;
         if (dragIndex === hoverIndex) {
@@ -87,18 +125,20 @@ const ProjectList: FC<ProjectListProps> = ({
     });
 
     const ref = React.useRef<HTMLDivElement>(null);
-    if (sortParam === 'MANUAL') {
+    if (sortParam === SORTING_OPTIONS.MANUAL) {
       drag(drop(ref));
     }
 
     return (
       <div ref={ref} style={{ opacity: isDragging ? 0.5 : 1 }}>
         <Project
+          exportToDrive={project.exportToDrive}
           isEdit={isEdit}
           project={project.project}
           responsibility={project.responsibility}
           deleteProject={deleteProject}
           key={project.project.id}
+          setProjectExport={updateProject}
         />
       </div>
     );
@@ -106,12 +146,11 @@ const ProjectList: FC<ProjectListProps> = ({
 
   return (
     <Box>
-      {testProjects.length !== 0 &&
-        testProjects.map((project: ProfessionalProjectResponse, index) => (
+      {projectsInList.length !== 0 &&
+        projectsInList.map((project: ProfessionalProjectResponse, index) => (
           <ProjectItem
             project={project}
             index={index}
-            // eslint-disable-next-line react/prop-types
             key={project.project.id}
           />
         ))}
