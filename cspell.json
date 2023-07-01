@@ -1,12 +1,6 @@
 {
   "version": "0.2",
-  "words": [
-    "Datagrid",
-    "VITE",
-    "testid",
-    "vairix",
-    "webp"
-  ],
+  "words": ["Datagrid", "VITE", "testid", "vairix", "webp"],
   "language": "en",
   "ignorePaths": [
     "**/node_modules/**",
@@ -22,6 +16,7 @@
     "./commitlint.config.js",
     "./cspell.json",
     "./public/**",
-    "./src/assets/**"
+    "./src/assets/**",
+    "./config"
   ]
 }

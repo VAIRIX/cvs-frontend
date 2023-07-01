@@ -14,7 +14,7 @@ export type ProjectResponse = {
 };
 
 export type ProjectProfessionalResponse = {
-  professional: Partial<ProfessionalResponse>;
+  professional: ProfessionalResponse;
   responsibility: string;
 };
 

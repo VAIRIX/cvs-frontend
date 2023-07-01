@@ -98,7 +98,10 @@ const AddProjectAttribute: FC<AddProjectAttributeProps> = ({
 
     setProjectAttributes((prev: ParsedProjectAttributedMap) => ({
       ...prev,
-      [attributeTypeName]: [...prev[attributeTypeName], newProjectAttributes],
+      [attributeTypeName]: [
+        ...(prev[attributeTypeName] || []),
+        newProjectAttributes,
+      ],
     }));
 
     setIsOpen(false);

@@ -13,6 +13,22 @@ const generateResume = async (professionalId: string) => {
   return response.data;
 };
 
+const updateProfessionalProject = async (professionalProjectData: {
+  professionalId: string;
+  projectId: string;
+  exportToDrive: boolean;
+}) => {
+  const { professionalId, projectId, exportToDrive } = professionalProjectData;
+  const response: GenerateResumeResponse = await http.put(
+    `/professionals/${professionalId}/project/${projectId}`,
+    {
+      exportToDrive,
+    },
+  );
+
+  return response.data;
+};
+
 const createAttribute = async (attribute: CreateAttributeRequest) => {
   const response: CreateAttributeResponse = await http.post(
     '/attributes',
@@ -25,4 +41,5 @@ const createAttribute = async (attribute: CreateAttributeRequest) => {
 export default {
   generateResume,
   createAttribute,
+  updateProfessionalProject,
 };

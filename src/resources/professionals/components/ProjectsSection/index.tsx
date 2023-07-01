@@ -14,6 +14,8 @@ import { Button, Box } from '@mui/material';
 import { useGetList, useRedirect } from 'react-admin';
 import { ACTIONS, RESOURCES } from 'api/resources';
 import { TEXTS } from 'constants/index';
+import PositionedMenu from './Menu';
+import ProjectList from './ProjectList';
 
 type ProjectsSectionProps = {
   projects: ProfessionalProjectResponse[] | undefined;
@@ -32,6 +34,8 @@ const ProjectsSection: FC<ProjectsSectionProps> = ({
 }) => {
   const redirect = useRedirect();
   const [isOpen, setIsOpen] = useState(false);
+
+  const [sortingOption, setSortingOption] = useState('');
 
   const { data: allProjects } = useGetList<ProjectResponse>(RESOURCES.PROJECTS);
 
@@ -70,25 +74,34 @@ const ProjectsSection: FC<ProjectsSectionProps> = ({
           sx={{ mb: 2, mr: 2 }}
           data-testid="projectsSection"
         />
-        <Box>
-          <Button
-            variant="outlined"
-            onClick={handleAddProject}
-            data-testid="addProject"
+        {isEdit && (
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              alignItems: 'center',
+              width: '100%',
+            }}
           >
-            {TEXTS.ADD_NEW_PROJECT}
-          </Button>
-        </Box>
+            <Button
+              variant="outlined"
+              onClick={handleAddProject}
+              data-testid="addProject"
+            >
+              {TEXTS.ADD_NEW_PROJECT}
+            </Button>
+            <PositionedMenu setSortingOption={setSortingOption} />
+          </Box>
+        )}
       </Box>
-      {projects?.map((project: ProfessionalProjectResponse) => (
-        <Project
-          isEdit={isEdit}
-          key={project?.project?.id}
-          project={project?.project}
-          responsibility={project?.responsibility}
-          deleteProject={deleteProject}
-        />
-      ))}
+      <ProjectList
+        projects={projects}
+        isEdit={isEdit}
+        sortParam={sortingOption}
+        deleteProject={deleteProject}
+        setProfessionalProjects={setProfessionalProjects}
+        professionalId={professionalId || ''}
+      ></ProjectList>
       {availableProjects && (
         <StepsDialog
           professionalId={professionalId || ''}
