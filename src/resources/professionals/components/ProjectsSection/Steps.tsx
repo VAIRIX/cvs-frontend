@@ -45,12 +45,14 @@ type StepsProps = {
   open: boolean;
   handleClose: () => void;
   professionalId: string;
+  ownProjectsId: string[];
 };
 
 const StepsDialog: FC<PropsWithChildren<StepsProps>> = ({
   open,
   handleClose,
   professionalId,
+  ownProjectsId,
 }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [vairixProject, setVairixProject] = useState(false);
@@ -317,7 +319,9 @@ const StepsDialog: FC<PropsWithChildren<StepsProps>> = ({
                     data-testid="search-project"
                     value={selectedProject}
                     onChange={handleOnChangeAutocomplete}
-                    options={allProjects}
+                    options={allProjects.filter(
+                      (project) => !ownProjectsId.includes(project.id),
+                    )}
                     getOptionLabel={handleGetOptionLabel}
                     renderInput={handleRenderInputAutocomplete}
                   />

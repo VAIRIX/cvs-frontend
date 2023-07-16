@@ -94,6 +94,7 @@ const ProjectsSection: FC<ProjectsSectionProps> = ({
       {availableProjects && (
         <StepsDialog
           professionalId={professionalId || ''}
+          ownProjectsId={projects.map((p) => p.project.id)}
           open={isOpen}
           handleClose={handleClose}
         ></StepsDialog>
