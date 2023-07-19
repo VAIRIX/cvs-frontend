@@ -6,6 +6,7 @@ import {
   SimpleForm,
   TextInput,
   Toolbar,
+  regex,
 } from 'react-admin';
 import {
   ProfessionalRequest,
@@ -71,6 +72,7 @@ const EditForm: FC<PropsWithChildren<EditFormProps>> = ({
     <SimpleForm
       component={Box}
       onSubmit={handleSave}
+      mode="onChange"
       toolbar={
         <Toolbar>
           <SaveButton alwaysEnable />
@@ -88,13 +90,25 @@ const EditForm: FC<PropsWithChildren<EditFormProps>> = ({
           >
             <TextInput
               data-testid="firstName"
+              validate={[
+                required(),
+                regex(
+                  /^[A-Za-z]+$/,
+                  'Please enter only letters from the alphabet',
+                ),
+              ]}
               source={addSource<ProfessionalRequest>('firstName')}
               sx={{ flex: 1, mr: 1 }}
-              validate={required()}
             />
             <TextInput
               data-testid="lastName"
-              validate={required()}
+              validate={[
+                required(),
+                regex(
+                  /^[A-Za-z]+$/,
+                  'Please enter only letters from the alphabet',
+                ),
+              ]}
               source={addSource<ProfessionalRequest>('lastName')}
               sx={{ flex: 1, ml: 1 }}
             />
