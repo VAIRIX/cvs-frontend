@@ -1,5 +1,4 @@
 import {
-  DateInput,
   required,
   SaveButton,
   SimpleForm,
@@ -16,7 +15,7 @@ import {
 import AddAttributesSection from '../AddAttributesSection';
 import { ProfessionalsSection } from '../ProfessionalsSection';
 import { FC, PropsWithChildren, useState } from 'react';
-import { addSource, formatDate, parseProjectAttributes } from 'utils';
+import { addSource, parseProjectAttributes } from 'utils';
 import { Card, Box } from '@mui/material';
 
 type EditFormProps = {
@@ -44,22 +43,19 @@ const EditForm: FC<PropsWithChildren<EditFormProps>> = ({
     const editProfessionalRequest: ProjectRequest = {
       id: parsedValues.id,
       name: parsedValues.name,
-      from: parsedValues.from,
-      to: parsedValues.to,
-      duration: parsedValues.duration,
       description: parsedValues.description,
       attributes: Object.values(projectAttributes)
         .flat()
         .map((attribute: ParsedProjectAttribute) => ({
           attributeId: attribute.id,
           attribute: attribute,
-          from: new Date(parsedValues.from),
-          to: new Date(parsedValues.to),
         })),
       professionals: projectProfessionals.map((professional) => ({
         professionalId: professional.professional.id,
         professional: professional.professional,
         responsibility: professional.responsibility,
+        startDate: professional.startDate,
+        endDate: professional.endDate,
       })),
     };
 
@@ -101,47 +97,6 @@ const EditForm: FC<PropsWithChildren<EditFormProps>> = ({
             <TextInput
               validate={required()}
               source={addSource<ProjectRequest>('description')}
-              sx={{ flex: 1, mr: 1 }}
-            />
-          </Box>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-            }}
-          >
-            <DateInput
-              validate={required()}
-              source={addSource<ProjectRequest>('from')}
-              sx={{ flex: 1, mr: 1 }}
-              format={(value) => {
-                if (!value) {
-                  return '';
-                }
-                return formatDate(value);
-              }}
-            />
-            <DateInput
-              source={addSource<ProjectRequest>('to')}
-              sx={{ flex: 1, mr: 1 }}
-              format={(value) => {
-                if (!value) {
-                  return '';
-                }
-                return formatDate(value);
-              }}
-            />
-          </Box>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
-          >
-            <TextInput
-              validate={required()}
-              source={addSource<ProjectRequest>('duration')}
               sx={{ flex: 1, mr: 1 }}
             />
           </Box>

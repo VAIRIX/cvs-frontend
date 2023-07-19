@@ -18,13 +18,15 @@ type ProjectProps = ProfessionalProjectResponse & {
 
 const Project: FC<ProjectProps> = ({
   project,
+  startDate,
+  endDate,
   responsibility,
   isEdit,
   deleteProject,
 }) => {
   const redirect = useRedirect();
-  const { from, to, name, description, id } = project;
-  const projectDate = formatProjectDates(from, to);
+  const { name, description, id } = project;
+  const projectDate = formatProjectDates(startDate, endDate);
   const handleShowProject = useCallback(() => {
     redirect(ACTIONS.SHOW, RESOURCES.PROJECTS, id);
   }, [id]);

@@ -34,6 +34,7 @@ import {
   ProjectResponse,
   ProjectRequest,
   ProfessionalResponse,
+  ProjectProfessionalResponse,
 } from 'types';
 import { ACTIONS, RESOURCES } from 'api/resources';
 import { TEXTS } from 'constants/texts';
@@ -53,7 +54,9 @@ const StepsDialog: FC<PropsWithChildren<StepsProps>> = ({
 }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [vairixProject, setVairixProject] = useState(false);
-  const steps = ['Step 1', 'Step 2'];
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const steps = ['Project Type', 'Details'];
 
   const [selectedProject, setSelectedProject] =
     useState<ProjectResponse | null>(null);
@@ -111,6 +114,8 @@ const StepsDialog: FC<PropsWithChildren<StepsProps>> = ({
 
   type VairixProjectData = {
     responsibility: string;
+    startDate: string;
+    endDate: string;
   };
   const handleSave = async (payload: unknown) => {
     if (vairixProject) {
@@ -124,6 +129,8 @@ const StepsDialog: FC<PropsWithChildren<StepsProps>> = ({
         projects: professionalData.projects.map((project) => ({
           projectId: project.project.id,
           responsibility: project.responsibility,
+          startDate: project.startDate,
+          endDate: project.endDate,
         })),
         attributes: Object.values(professionalData.attributes)
           .flat()
@@ -136,6 +143,8 @@ const StepsDialog: FC<PropsWithChildren<StepsProps>> = ({
       editProfessionalRequest.projects.push({
         projectId: selectedProject.id,
         responsibility: parsedValues.responsibility,
+        startDate: parsedValues.startDate,
+        endDate: parsedValues.endDate,
       });
 
       update(RESOURCES.PROFESSIONALS, {
@@ -154,6 +163,8 @@ const StepsDialog: FC<PropsWithChildren<StepsProps>> = ({
         {
           responsibility: parsedValues.role,
           professionalId: professionalId,
+          startDate,
+          endDate,
         },
       ],
       attributes: Object.values(projectAttributes)
@@ -196,6 +207,16 @@ const StepsDialog: FC<PropsWithChildren<StepsProps>> = ({
     [],
   );
 
+  const handleDateChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      const name = e.target.name;
+
+      name === 'startDate' ? setStartDate(value) : setEndDate(value);
+    },
+    [],
+  );
+
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
@@ -204,9 +225,31 @@ const StepsDialog: FC<PropsWithChildren<StepsProps>> = ({
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const ProjectDates = () => (
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'space-between',
+      }}
+    >
+      <DateInput
+        name="startDate"
+        validate={required()}
+        source={addSource<ProjectProfessionalResponse>('startDate')}
+        sx={{ flex: 1, mr: 1 }}
+        onChange={handleDateChange}
+      />
+      <DateInput
+        name="endDate"
+        source={addSource<ProjectProfessionalResponse>('endDate')}
+        sx={{ flex: 1, mr: 1 }}
+        onChange={handleDateChange}
+      />
+    </Box>
+  );
+
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Select an option:</DialogTitle>
       <DialogContent
         sx={{
           minWidth: '500px',
@@ -217,6 +260,17 @@ const StepsDialog: FC<PropsWithChildren<StepsProps>> = ({
           'justify-content': 'space-between',
         }}
       >
+        <Stepper
+          sx={{ paddingTop: '10px', width: '400px' }}
+          activeStep={activeStep}
+          alternativeLabel
+        >
+          {steps.map((label) => (
+            <Step key={label}>
+              <StepLabel>{label}</StepLabel>
+            </Step>
+          ))}
+        </Stepper>
         {activeStep === 0 && (
           <Box
             sx={{
@@ -234,7 +288,7 @@ const StepsDialog: FC<PropsWithChildren<StepsProps>> = ({
               }}
               data-testid="addProject"
             >
-              Vairix project
+              Vairix Project
             </Button>
             <Button
               variant="outlined"
@@ -244,7 +298,7 @@ const StepsDialog: FC<PropsWithChildren<StepsProps>> = ({
               }}
               data-testid="addProject"
             >
-              {'Previous Experience'}
+              External Project
             </Button>
           </Box>
         )}
@@ -274,6 +328,7 @@ const StepsDialog: FC<PropsWithChildren<StepsProps>> = ({
                     onChange={handleRoleChange}
                     sx={{ flex: 1, mr: 1 }}
                   />
+                  <ProjectDates />
                 </Box>
               </SimpleForm>
             </Create>
@@ -323,34 +378,7 @@ const StepsDialog: FC<PropsWithChildren<StepsProps>> = ({
                         sx={{ flex: 1, mr: 1 }}
                       />
                     </Box>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                      }}
-                    >
-                      <DateInput
-                        validate={required()}
-                        source={addSource<ProjectRequest>('from')}
-                        sx={{ flex: 1, mr: 1 }}
-                        format={(value) => {
-                          if (!value) {
-                            return '';
-                          }
-                          return formatDate(value);
-                        }}
-                      />
-                      <DateInput
-                        source={addSource<ProjectRequest>('to')}
-                        sx={{ flex: 1, mr: 1 }}
-                        format={(value) => {
-                          if (!value) {
-                            return '';
-                          }
-                          return formatDate(value);
-                        }}
-                      />
-                    </Box>
+                    <ProjectDates />
                     <AddAttributesSection
                       projectAttributes={projectAttributes}
                       setProjectAttributes={setProjectAttributes}
@@ -360,18 +388,6 @@ const StepsDialog: FC<PropsWithChildren<StepsProps>> = ({
               </Create>
             </div>
           ))}
-
-        <Stepper
-          sx={{ paddingTop: '10px' }}
-          activeStep={activeStep}
-          alternativeLabel
-        >
-          {steps.map((label) => (
-            <Step key={label}>
-              <StepLabel>{label}</StepLabel>
-            </Step>
-          ))}
-        </Stepper>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>

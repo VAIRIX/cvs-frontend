@@ -2,7 +2,6 @@ import { Loading, Show, useRedirect, useShowController } from 'react-admin';
 import { Box, Card, Button } from '@mui/material';
 import { Paragraph, SectionTitle } from 'components/ui';
 import { ProjectResponse } from 'types/projects';
-import { formatProjectDates } from 'utils';
 import { ProfessionalsSection } from './components/ProfessionalsSection';
 import AttributesSection from './components/AttributesSection';
 import EditIcon from '@mui/icons-material/Edit';
@@ -22,8 +21,7 @@ export const ProjectShow = () => {
 
   if (!record) return null;
 
-  const { name, description, from, to, professionals, attributes } = record;
-  const projectDate = formatProjectDates(from, to);
+  const { name, description, professionals, attributes } = record;
 
   return (
     <Show title={TEXTS.PROJECTS_TITLE} component="div" actions={false}>
@@ -47,7 +45,6 @@ export const ProjectShow = () => {
               </Button>
             </Box>
           </Box>
-          <Paragraph sx={{ fontStyle: 'italic' }}>{projectDate}</Paragraph>
           <Paragraph>{description}</Paragraph>
           <AttributesSection attributes={attributes} />
         </Card>

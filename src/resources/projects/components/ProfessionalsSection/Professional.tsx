@@ -1,7 +1,7 @@
 import { FC, useCallback } from 'react';
 import { Box, Paper, Button } from '@mui/material';
 import { ProfessionalResponse } from 'types';
-import { Chip, SectionTitle, SubsectionTitle } from 'components/ui';
+import { Chip, SectionTitle, SubsectionTitle, Paragraph } from 'components/ui';
 import {
   Launch as LaunchIcon,
   Delete as DeleteIcon,
@@ -9,12 +9,15 @@ import {
 import { useRedirect } from 'react-admin';
 import { ACTIONS, RESOURCES } from 'api/resources';
 import { TEXTS } from 'constants/index';
+import { formatProjectDates } from 'utils';
 
 type ProjectProps = {
   professional: ProfessionalResponse;
   responsibility: string;
   deleteProfessional: (id: string) => void;
   isEdit: boolean;
+  startDate: string;
+  endDate: string;
 };
 
 const Project: FC<ProjectProps> = ({
@@ -22,6 +25,8 @@ const Project: FC<ProjectProps> = ({
   responsibility,
   deleteProfessional,
   isEdit,
+  startDate,
+  endDate,
 }) => {
   const redirect = useRedirect();
   const { firstName, lastName, headline, id } = professional;
@@ -34,6 +39,8 @@ const Project: FC<ProjectProps> = ({
   const handleShowProfessional = () => {
     redirect(ACTIONS.SHOW, RESOURCES.PROFESSIONALS, id);
   };
+
+  const projectDate = formatProjectDates(startDate, endDate);
 
   return (
     <Paper
@@ -64,6 +71,7 @@ const Project: FC<ProjectProps> = ({
           />
           <LaunchIcon />
         </Button>
+        <Paragraph sx={{ fontStyle: 'italic' }}>{projectDate}</Paragraph>
         <SubsectionTitle title={TEXTS.ROLE_LABEL} />
         <Chip sx={{ ml: 2 }} label={responsibility} />
       </Box>
