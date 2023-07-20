@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import {
   Dispatch,
   FC,
@@ -17,10 +18,11 @@ import {
   TextField,
 } from '@mui/material';
 import { SectionTitle } from 'components/ui';
-import { useGetList, useRedirect } from 'react-admin';
+import { useGetList, useRedirect, DateInput, required } from 'react-admin';
 import Dialog from 'components/Dialog';
 import { TEXTS } from 'constants/index';
 import { ACTIONS, RESOURCES } from 'api/resources';
+import { addSource } from 'utils';
 
 type ProfessionalsSectionProps = {
   professionals: ProjectProfessionalResponse[] | undefined;
@@ -43,6 +45,8 @@ export const ProfessionalsSection: FC<ProfessionalsSectionProps> = ({
   const [selectedProfessional, setSelectedProfessional] =
     useState<ProfessionalResponse | null>(null);
   const [professionalRole, setProfessionalRole] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
 
   const { data: allProfessionals } = useGetList<ProfessionalResponse>(
     RESOURCES.PROFESSIONALS,
@@ -68,11 +72,19 @@ export const ProfessionalsSection: FC<ProfessionalsSectionProps> = ({
     const newProfessionalProject: ProjectProfessionalResponse = {
       responsibility: professionalRole,
       professional: selectedProfessional,
+      startDate,
+      endDate,
     };
     setProjectProfessionals((prev) => [...prev, newProfessionalProject]);
     setIsOpen(false);
     setSelectedProfessional(null);
-  }, [selectedProfessional, setProjectProfessionals, professionalRole]);
+  }, [
+    selectedProfessional,
+    setProjectProfessionals,
+    professionalRole,
+    startDate,
+    endDate,
+  ]);
 
   const handleAddProfessional = useCallback(() => {
     if (isEdit) {
@@ -112,6 +124,16 @@ export const ProfessionalsSection: FC<ProfessionalsSectionProps> = ({
     [],
   );
 
+  const handleDateChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      const name = e.target.name;
+
+      name === 'startDate' ? setStartDate(value) : setEndDate(value);
+    },
+    [],
+  );
+
   const deleteProfessional = (id: string) => {
     if (!setProjectProfessionals) return;
     setProjectProfessionals((prev) =>
@@ -135,9 +157,12 @@ export const ProfessionalsSection: FC<ProfessionalsSectionProps> = ({
       {professionals?.map((professional: ProjectProfessionalResponse) => (
         <Professional
           key={professional?.professional.id}
+          // @ts-expect-error
           professional={professional?.professional}
           responsibility={professional?.responsibility}
           deleteProfessional={deleteProfessional}
+          startDate={professional?.startDate}
+          endDate={professional?.endDate}
           isEdit={isEdit}
         />
       ))}
@@ -165,6 +190,26 @@ export const ProfessionalsSection: FC<ProfessionalsSectionProps> = ({
             onChange={handleRoleChange}
             sx={{ flex: 1, mr: 1 }}
           />
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+            }}
+          >
+            <DateInput
+              name="startDate"
+              validate={required()}
+              source={addSource<ProjectProfessionalResponse>('startDate')}
+              sx={{ flex: 1, mr: 1 }}
+              onChange={handleDateChange}
+            />
+            <DateInput
+              name="endDate"
+              source={addSource<ProjectProfessionalResponse>('endDate')}
+              sx={{ flex: 1, mr: 1 }}
+              onChange={handleDateChange}
+            />
+          </Box>
         </Dialog>
       )}
     </Box>
