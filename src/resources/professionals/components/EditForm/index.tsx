@@ -69,6 +69,7 @@ const EditForm: FC<PropsWithChildren<EditFormProps>> = ({
 
   return (
     <SimpleForm
+      warnWhenUnsavedChanges
       component={Box}
       onSubmit={handleSave}
       toolbar={
