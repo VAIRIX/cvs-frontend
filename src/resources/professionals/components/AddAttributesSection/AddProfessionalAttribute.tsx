@@ -233,6 +233,14 @@ const AddProfessionalAttribute: FC<AddProfessionalAttributeProps> = ({
     [],
   );
 
+  const createdAttributes = useMemo(
+    () => allOptions.map((attr) => attr.name.toLowerCase()),
+    [allOptions],
+  );
+  const isCreatedAttribute = createdAttributes.includes(
+    dialogValue.toLowerCase(),
+  );
+
   return (
     <>
       <Autocomplete
@@ -252,8 +260,12 @@ const AddProfessionalAttribute: FC<AddProfessionalAttributeProps> = ({
       />
       <Dialog
         closeText="Cancel"
-        submitText="Create"
-        dialogTitle={`Create new ${attributeTypeName}`}
+        submitText={!isCreatedAttribute ? 'Create' : ''}
+        dialogTitle={
+          !isCreatedAttribute
+            ? `Create new ${attributeTypeName}`
+            : `Attribute already created`
+        }
         close={handleCloseDialog}
         isOpen={isOpen}
         submit={createNewAttributeType}

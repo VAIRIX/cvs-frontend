@@ -33,9 +33,11 @@ const Dialog: FC<PropsWithChildren<DialogProps>> = ({
         <Button data-testid="dialog-cancel" onClick={close} color="primary">
           {closeText}
         </Button>
-        <Button data-testid="dialog-add" onClick={submit} color="primary">
-          {submitText}
-        </Button>
+        {submitText && (
+          <Button data-testid="dialog-add" onClick={submit} color="primary">
+            {submitText}
+          </Button>
+        )}
       </DialogActions>
     </MuiDialog>
   );
