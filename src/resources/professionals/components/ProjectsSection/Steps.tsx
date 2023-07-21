@@ -396,11 +396,6 @@ const StepsDialog: FC<PropsWithChildren<StepsProps>> = ({
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
         {activeStep !== 0 && <Button onClick={handleBack}>Back</Button>}
-        {activeStep !== steps.length - 1 ? (
-          <Button onClick={handleNext}>Next</Button>
-        ) : (
-          <></>
-        )}
       </DialogActions>
     </Dialog>
   );
