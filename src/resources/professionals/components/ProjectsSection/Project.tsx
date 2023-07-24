@@ -10,6 +10,7 @@ import {
 import { useRedirect } from 'react-admin';
 import { TEXTS } from 'constants/index';
 import { ACTIONS, RESOURCES } from 'api/resources';
+import vairixSvg from 'assets/vairix.svg';
 
 type ProjectProps = ProfessionalProjectResponse & {
   isEdit: boolean;
@@ -25,7 +26,7 @@ const Project: FC<ProjectProps> = ({
   deleteProject,
 }) => {
   const redirect = useRedirect();
-  const { name, description, id } = project;
+  const { name, description, id, vairixProject } = project;
   const projectDate = formatProjectDates(startDate, endDate);
   const handleShowProject = useCallback(() => {
     redirect(ACTIONS.SHOW, RESOURCES.PROJECTS, id);
@@ -63,6 +64,16 @@ const Project: FC<ProjectProps> = ({
       )}
       <Button sx={{ p: 0 }} onClick={handleShowProject}>
         <SectionTitle sx={{ fontSize: 20 }} title={name} /> <LaunchIcon />
+        {vairixProject && (
+          <img
+            src={vairixSvg}
+            alt="vairix icon"
+            style={{
+              height: '20px',
+              width: '20px',
+            }}
+          />
+        )}
       </Button>
       <Paragraph sx={{ mt: 1, fontStyle: 'italic' }}>{projectDate}</Paragraph>
       <Paragraph sx={{ my: 1 }}>{description}</Paragraph>
