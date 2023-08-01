@@ -42,7 +42,6 @@ export type ProfessionalRequest = {
 
 export interface ProfessionalProjectResponse {
   responsibility: string;
-  startDate: string;
-  endDate: string;
   project: ProjectResponse;
+  duration: string;
 }

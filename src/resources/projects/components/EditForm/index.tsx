@@ -54,8 +54,7 @@ const EditForm: FC<PropsWithChildren<EditFormProps>> = ({
         professionalId: professional.professional.id,
         professional: professional.professional,
         responsibility: professional.responsibility,
-        startDate: professional.startDate,
-        endDate: professional.endDate,
+        duration: professional.duration,
       })),
     };
 
