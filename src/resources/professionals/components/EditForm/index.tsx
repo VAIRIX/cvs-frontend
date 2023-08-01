@@ -60,8 +60,7 @@ const EditForm: FC<PropsWithChildren<EditFormProps>> = ({
       projects: professionalProjects.map((project) => ({
         projectId: project.project.id,
         responsibility: project.responsibility,
-        startDate: project.startDate,
-        endDate: project.endDate,
+        duration: project.duration,
       })),
     };
 

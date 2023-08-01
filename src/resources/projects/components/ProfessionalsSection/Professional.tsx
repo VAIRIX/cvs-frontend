@@ -9,24 +9,21 @@ import {
 import { useRedirect } from 'react-admin';
 import { ACTIONS, RESOURCES } from 'api/resources';
 import { TEXTS } from 'constants/index';
-import { formatProjectDates } from 'utils';
 
 type ProjectProps = {
   professional: ProfessionalResponse;
   responsibility: string;
   deleteProfessional: (id: string) => void;
   isEdit: boolean;
-  startDate: string;
-  endDate: string;
+  duration: string;
 };
 
-const Project: FC<ProjectProps> = ({
+const Professional: FC<ProjectProps> = ({
   professional,
   responsibility,
   deleteProfessional,
   isEdit,
-  startDate,
-  endDate,
+  duration,
 }) => {
   const redirect = useRedirect();
   const { firstName, lastName, headline, id } = professional;
@@ -39,8 +36,6 @@ const Project: FC<ProjectProps> = ({
   const handleShowProfessional = () => {
     redirect(ACTIONS.SHOW, RESOURCES.PROFESSIONALS, id);
   };
-
-  const projectDate = formatProjectDates(startDate, endDate);
 
   return (
     <Paper
@@ -71,7 +66,7 @@ const Project: FC<ProjectProps> = ({
           />
           <LaunchIcon />
         </Button>
-        <Paragraph sx={{ fontStyle: 'italic' }}>{projectDate}</Paragraph>
+        <Paragraph sx={{ fontStyle: 'italic' }}>{duration}</Paragraph>
         <SubsectionTitle title={TEXTS.ROLE_LABEL} />
         <Chip sx={{ ml: 2 }} label={responsibility} />
       </Box>
@@ -79,4 +74,4 @@ const Project: FC<ProjectProps> = ({
   );
 };
 
-export default Project;
+export default Professional;

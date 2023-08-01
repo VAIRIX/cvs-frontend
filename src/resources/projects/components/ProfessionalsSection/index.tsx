@@ -18,7 +18,13 @@ import {
   TextField,
 } from '@mui/material';
 import { SectionTitle } from 'components/ui';
-import { useGetList, useRedirect, DateInput, required } from 'react-admin';
+import {
+  useGetList,
+  useRedirect,
+  DateInput,
+  required,
+  TextInput,
+} from 'react-admin';
 import Dialog from 'components/Dialog';
 import { TEXTS } from 'constants/index';
 import { ACTIONS, RESOURCES } from 'api/resources';
@@ -45,8 +51,7 @@ export const ProfessionalsSection: FC<ProfessionalsSectionProps> = ({
   const [selectedProfessional, setSelectedProfessional] =
     useState<ProfessionalResponse | null>(null);
   const [professionalRole, setProfessionalRole] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [duration, setDuration] = useState('');
 
   const { data: allProfessionals } = useGetList<ProfessionalResponse>(
     RESOURCES.PROFESSIONALS,
@@ -72,8 +77,7 @@ export const ProfessionalsSection: FC<ProfessionalsSectionProps> = ({
     const newProfessionalProject: ProjectProfessionalResponse = {
       responsibility: professionalRole,
       professional: selectedProfessional,
-      startDate,
-      endDate,
+      duration,
     };
     setProjectProfessionals((prev) => [...prev, newProfessionalProject]);
     setIsOpen(false);
@@ -82,8 +86,7 @@ export const ProfessionalsSection: FC<ProfessionalsSectionProps> = ({
     selectedProfessional,
     setProjectProfessionals,
     professionalRole,
-    startDate,
-    endDate,
+    duration,
   ]);
 
   const handleAddProfessional = useCallback(() => {
@@ -124,12 +127,10 @@ export const ProfessionalsSection: FC<ProfessionalsSectionProps> = ({
     [],
   );
 
-  const handleDateChange = useCallback(
+  const handleDurationChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
-      const name = e.target.name;
-
-      name === 'startDate' ? setStartDate(value) : setEndDate(value);
+      setDuration(value);
     },
     [],
   );
@@ -161,8 +162,7 @@ export const ProfessionalsSection: FC<ProfessionalsSectionProps> = ({
           professional={professional?.professional}
           responsibility={professional?.responsibility}
           deleteProfessional={deleteProfessional}
-          startDate={professional?.startDate}
-          endDate={professional?.endDate}
+          duration={professional?.duration}
           isEdit={isEdit}
         />
       ))}
@@ -196,18 +196,11 @@ export const ProfessionalsSection: FC<ProfessionalsSectionProps> = ({
               justifyContent: 'space-between',
             }}
           >
-            <DateInput
-              name="startDate"
+            <TextInput
+              source={addSource<ProjectProfessionalResponse>('duration')}
+              sx={{ flex: 1, mr: 1 }}
               validate={required()}
-              source={addSource<ProjectProfessionalResponse>('startDate')}
-              sx={{ flex: 1, mr: 1 }}
-              onChange={handleDateChange}
-            />
-            <DateInput
-              name="endDate"
-              source={addSource<ProjectProfessionalResponse>('endDate')}
-              sx={{ flex: 1, mr: 1 }}
-              onChange={handleDateChange}
+              onChange={handleDurationChange}
             />
           </Box>
         </Dialog>

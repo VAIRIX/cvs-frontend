@@ -82,8 +82,7 @@ const ProjectsSection: FC<ProjectsSectionProps> = ({
       </Box>
       {projects?.map((project: ProfessionalProjectResponse) => (
         <Project
-          startDate={project?.startDate}
-          endDate={project?.endDate}
+          duration={project?.duration}
           isEdit={isEdit}
           key={project?.project?.id}
           project={project?.project}

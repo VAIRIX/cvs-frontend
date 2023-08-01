@@ -9,8 +9,7 @@ export const ProjectsList = () => (
     exporter={false}
   >
     <Datagrid rowClick={ACTIONS.SHOW}>
-      <DateField source="from" />
-      <DateField source="duration" />
+      <TextField source="name" />
       <TextField source="description" />
     </Datagrid>
   </List>

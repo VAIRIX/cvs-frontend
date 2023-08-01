@@ -16,8 +16,7 @@ export type ProjectResponse = {
 export type ProjectProfessionalResponse = {
   professional: Partial<ProfessionalResponse>;
   responsibility: string;
-  startDate: string;
-  endDate: string;
+  duration: string;
 };
 
 export type ParsedProjects = {

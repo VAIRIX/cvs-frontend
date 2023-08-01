@@ -19,15 +19,13 @@ type ProjectProps = ProfessionalProjectResponse & {
 
 const Project: FC<ProjectProps> = ({
   project,
-  startDate,
-  endDate,
   responsibility,
+  duration,
   isEdit,
   deleteProject,
 }) => {
   const redirect = useRedirect();
   const { name, description, id, vairixProject } = project;
-  const projectDate = formatProjectDates(startDate, endDate);
   const handleShowProject = useCallback(() => {
     redirect(ACTIONS.SHOW, RESOURCES.PROJECTS, id);
   }, [id]);
@@ -75,7 +73,7 @@ const Project: FC<ProjectProps> = ({
           />
         )}
       </Button>
-      <Paragraph sx={{ mt: 1, fontStyle: 'italic' }}>{projectDate}</Paragraph>
+      <Paragraph sx={{ mt: 1, fontStyle: 'italic' }}>{duration}</Paragraph>
       <Paragraph sx={{ my: 1 }}>{description}</Paragraph>
       <SubsectionTitle title={TEXTS.ROLE_LABEL} />
       <Chip sx={{ ml: 1 }} label={responsibility} />
