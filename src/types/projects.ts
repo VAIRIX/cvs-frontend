@@ -38,3 +38,5 @@ export type ProjectRequest = {
   professionals: ProjectProfessionalResponse[];
   attributes: { attributeId: string }[];
 };
+
+export type MoveDirection = 'up' | 'down';

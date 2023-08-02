@@ -6,7 +6,11 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { ProfessionalProjectResponse, ProjectResponse } from 'types';
+import {
+  ProfessionalProjectResponse,
+  ProjectResponse,
+  MoveDirection,
+} from 'types';
 import Project from './Project';
 import StepsDialog from './Steps';
 import { SectionTitle } from 'components/ui';
@@ -47,6 +51,28 @@ const ProjectsSection: FC<ProjectsSectionProps> = ({
     setIsOpen(false);
   }, [isOpen]);
 
+  const doMoveProject = (
+    projectList: ProfessionalProjectResponse[],
+    index: number,
+    direction: MoveDirection,
+  ): ProfessionalProjectResponse[] => {
+    const newIndex = direction === 'up' ? index - 1 : index + 1;
+
+    if (newIndex < 0 || newIndex >= projectList.length) return [...projectList];
+
+    [projectList[index], projectList[newIndex]] = [
+      projectList[newIndex],
+      projectList[index],
+    ];
+
+    return [...projectList];
+  };
+
+  const moveProject = (index: number, direction: MoveDirection) => {
+    if (!setProfessionalProjects) return;
+    setProfessionalProjects((prev) => doMoveProject(prev, index, direction));
+  };
+
   const deleteProject = (id: string) => {
     if (!setProfessionalProjects) return;
     setProfessionalProjects((prev) =>
@@ -80,7 +106,7 @@ const ProjectsSection: FC<ProjectsSectionProps> = ({
           </Button>
         </Box>
       </Box>
-      {projects?.map((project: ProfessionalProjectResponse) => (
+      {projects?.map((project: ProfessionalProjectResponse, projectIdx) => (
         <Project
           duration={project?.duration}
           isEdit={isEdit}
@@ -88,6 +114,9 @@ const ProjectsSection: FC<ProjectsSectionProps> = ({
           project={project?.project}
           responsibility={project?.responsibility}
           deleteProject={deleteProject}
+          moveProject={moveProject}
+          projectIdx={projectIdx}
+          totalProjects={projects.length}
         />
       ))}
       {availableProjects && (
